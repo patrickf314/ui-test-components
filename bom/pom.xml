@@ -13,12 +13,6 @@
     <artifactId>bom</artifactId>
     <packaging>pom</packaging>
 
-    <properties>
-        <lombok.version>1.18.34</lombok.version>
-        <playwright.version>1.46.0</playwright.version>
-        <assertj.version>3.26.3</assertj.version>
-    </properties>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -31,6 +25,12 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j-api.version}</version>
             </dependency>
 
             <dependency>
