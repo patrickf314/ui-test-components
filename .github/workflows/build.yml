@@ -16,16 +16,22 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up JDK
-      uses: actions/setup-java@v4.2.1
-      with:
-        java-version: '20'
-        distribution: 'temurin'
-        cache: maven
-    - name: Build with Maven
-      run: mvn install --file pom.xml -DskipTests
+      - name: Checkout source code
+        uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4.2.1
+        with:
+          java-version: '20'
+          distribution: 'temurin'
+          cache: maven
+      - name: Build with Maven
+        run: mvn install --file pom.xml -DskipTests
+      - name: Run tests
+        run: mvn test --file pom.xml
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v4
+        if: success() || failure()
+        with:
+          report_paths: '**/target/surefire-reports/TEST-*.xml'

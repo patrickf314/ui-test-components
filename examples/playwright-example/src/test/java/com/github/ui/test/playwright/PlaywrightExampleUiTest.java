@@ -5,14 +5,26 @@ import com.github.ui.test.core.context.UiTestContext;
 import com.github.ui.test.playwright.browser.PlaywrightBrowser;
 import com.github.ui.test.playwright.page.TestPage;
 import org.junit.jupiter.api.*;
+import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
+import org.testcontainers.utility.MountableFile;
 
 import java.util.UUID;
 
 import static com.github.ui.test.playwright.assertion.PlaywrightUiTestAssertions.assertThat;
 
+@Testcontainers
 public class PlaywrightExampleUiTest {
 
     private static final PlaywrightBrowser BROWSER = new PlaywrightBrowser();
+
+    @Container
+    private final GenericContainer<?> webserverContainer = new GenericContainer<>(DockerImageName.parse("httpd:2.4.62"))
+            .withCopyFileToContainer(MountableFile.forClasspathResource("test.html"), "/usr/local/apache2/htdocs/")
+            .withExposedPorts(80);
+
     private UiTestContext context;
 
     @BeforeAll
@@ -29,7 +41,7 @@ public class PlaywrightExampleUiTest {
 
     @BeforeEach
     void setupTest(TestInfo testInfo) {
-        context = BROWSER.createNewTestContext("http://localhost:8080", "target/ui-tests", testName(testInfo));
+        context = BROWSER.createNewTestContext("http://localhost:" + webserverContainer.getMappedPort(80), "target/ui-tests", testName(testInfo));
     }
 
     @AfterEach
