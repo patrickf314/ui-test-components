@@ -1,0 +1,29 @@
+<html>
+<head>
+    <title>Test Page</title>
+</head>
+<body>
+<div>
+    This is a basic HTML page for testing the Playwright UI test environment
+</div>
+<div>
+    <form onsubmit="handleSubmit(event); return false;">
+        <label for="input">Some Input Field:</label>
+        <input id="input" name="input" type="text">
+        <button id="submit">Submit</button>
+    </form>
+
+    <div>
+        Last submitted value: <span id="output"></span>
+    </div>
+</div>
+<script type="text/javascript">
+    function handleSubmit(event) {
+        event.preventDefault();
+
+        const data = new FormData(event.target);
+        document.getElementById("output").innerText = data.get('input').toString();
+    }
+</script>
+</body>
+</html>

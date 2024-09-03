@@ -11,8 +11,11 @@
 
     <modules>
         <module>bom</module>
+
         <module>core</module>
         <module>playwright</module>
+
+        <module>examples/playwright-example</module>
     </modules>
 
     <properties>

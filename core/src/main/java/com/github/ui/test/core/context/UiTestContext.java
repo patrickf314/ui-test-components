@@ -10,5 +10,5 @@ public interface UiTestContext {
 
     void close();
 
-    <T extends UiTestPage> T openNewPage(Function<UiTestPageContext, T> pageConstructor, String url);
+    <T extends UiTestPage> T openNewPage(Function<UiTestPageContext, T> pageConstructor, String path);
 }
