@@ -11,4 +11,5 @@ public interface UiTestPageContext extends UiTestElementContext {
     String getUrl();
 
     <T extends UiTestPage> T reload(Function<UiTestPageContext, T> constructor);
+
 }

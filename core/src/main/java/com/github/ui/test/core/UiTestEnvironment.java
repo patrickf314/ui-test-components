@@ -3,6 +3,7 @@ package com.github.ui.test.core;
 import com.github.ui.test.core.browser.UiTestBrowser;
 import com.github.ui.test.core.component.*;
 import com.github.ui.test.core.context.UiTestComponentContext;
+import com.github.ui.test.core.context.UiTestContext;
 import com.github.ui.test.core.predicate.UiTestComponentPredicate;
 import com.github.ui.test.core.predicate.UiTestComponentPredicates;
 import com.github.ui.test.core.selector.Selector;
@@ -29,6 +30,10 @@ public abstract class UiTestEnvironment {
         }
 
         instance = environment;
+    }
+
+    public static UiTestContext createNewTestContext(String baseUrl, String outputDirectory, String testName) {
+        return getInstance().getBrowser().createNewTestContext(baseUrl, outputDirectory, testName);
     }
 
     // #################################################################################################################

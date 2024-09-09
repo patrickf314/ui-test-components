@@ -4,12 +4,24 @@ import com.github.ui.test.core.browser.UiTestBrowser;
 import com.github.ui.test.core.context.UiTestContext;
 import com.github.ui.test.playwright.context.PlaywrightContext;
 import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.Tracing;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.function.Function;
+
 @Slf4j
-public class PlaywrightBrowser implements UiTestBrowser {
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+public enum PlaywrightBrowser implements UiTestBrowser {
+
+    CHROMIUM(Playwright::chromium),
+    FIREFOX(Playwright::firefox),
+    WEBKIT(Playwright::webkit);
+
+    private final Function<Playwright, BrowserType> browserType;
 
     private Playwright playwright;
     private Browser browser;
@@ -21,12 +33,12 @@ public class PlaywrightBrowser implements UiTestBrowser {
         }
 
         playwright = Playwright.create();
-        browser = playwright.firefox().launch();
+        browser = browserType.apply(playwright).launch();
     }
 
     @Override
     public UiTestContext createNewTestContext(String baseUrl, String outputDirectory, String testName) {
-        if(browser == null) {
+        if (browser == null) {
             throw new IllegalStateException("Browser is not started");
         }
 

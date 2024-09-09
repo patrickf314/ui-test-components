@@ -1,13 +1,15 @@
 package com.github.ui.test.playwright.context;
 
-import com.microsoft.playwright.Page;
 import com.github.ui.test.core.component.UiTestComponent;
 import com.github.ui.test.core.component.UiTestComponentList;
 import com.github.ui.test.core.component.UiTestPage;
-import com.github.ui.test.playwright.component.PlaywrightListComponent;
 import com.github.ui.test.core.context.UiTestComponentContext;
 import com.github.ui.test.core.context.UiTestPageContext;
+import com.github.ui.test.core.data.UiTestDownload;
 import com.github.ui.test.core.selector.Selector;
+import com.github.ui.test.playwright.component.PlaywrightListComponent;
+import com.github.ui.test.playwright.data.PlaywrightDownload;
+import com.microsoft.playwright.Page;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -50,6 +52,12 @@ public class PlaywrightPageContext implements UiTestPageContext {
         var testPage = constructor.apply(this);
         page.waitForURL(baseUrl + testPage.getPathPattern());
         return testPage;
+    }
+
+    @Override
+    public UiTestDownload waitForDownload(Runnable downloadStartAction) {
+        var download = page.waitForDownload(downloadStartAction);
+        return new PlaywrightDownload(download);
     }
 
     @Override

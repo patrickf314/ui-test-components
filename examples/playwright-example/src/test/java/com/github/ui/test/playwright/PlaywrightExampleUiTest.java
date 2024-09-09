@@ -16,9 +16,9 @@ import java.util.UUID;
 import static com.github.ui.test.playwright.assertion.PlaywrightUiTestAssertions.assertThat;
 
 @Testcontainers
-public class PlaywrightExampleUiTest {
+class PlaywrightExampleUiTest {
 
-    private static final PlaywrightBrowser BROWSER = new PlaywrightBrowser();
+    private static final PlaywrightBrowser BROWSER = PlaywrightBrowser.FIREFOX;
 
     @Container
     private final GenericContainer<?> webserverContainer = new GenericContainer<>(DockerImageName.parse("httpd:2.4.62"))

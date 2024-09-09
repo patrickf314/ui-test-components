@@ -1,5 +1,6 @@
 package com.github.ui.test.playwright.context;
 
+import com.github.ui.test.core.data.UiTestDownload;
 import com.github.ui.test.playwright.component.PlaywrightListComponent;
 import com.github.ui.test.playwright.predicate.PlaywrightComponentPredicates;
 import com.github.ui.test.playwright.selector.PlaywrightSelectors;
@@ -28,6 +29,11 @@ public class PlaywrightComponentContext implements UiTestComponentContext {
     @Override
     public <T extends UiTestPage> T waitForPage(Function<UiTestPageContext, T> constructor) {
         return pageContext.waitForPage(constructor);
+    }
+
+    @Override
+    public UiTestDownload waitForDownload(Runnable downloadStartAction) {
+        return pageContext.waitForDownload(downloadStartAction);
     }
 
     @Override
