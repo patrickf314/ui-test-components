@@ -9,15 +9,6 @@
     <version>1.0</version>
     <packaging>pom</packaging>
 
-    <modules>
-        <module>bom</module>
-
-        <module>core</module>
-        <module>playwright</module>
-
-        <module>examples/playwright-example</module>
-    </modules>
-
     <properties>
         <maven.compiler.source>20</maven.compiler.source>
         <maven.compiler.target>20</maven.compiler.target>
@@ -29,6 +20,26 @@
         <assertj.version>3.26.3</assertj.version>
         <slf4j-api.version>2.0.16</slf4j-api.version>
     </properties>
+
+    <modules>
+        <module>bom</module>
+
+        <module>core</module>
+        <module>playwright</module>
+
+        <module>examples/playwright-example</module>
+    </modules>
+
+    <distributionManagement>
+        <repository>
+            <id>ui-test-components-repository</id>
+            <name>GitHub Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/patrickf314/ui-test-components</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </distributionManagement>
 
     <build>
         <plugins>
