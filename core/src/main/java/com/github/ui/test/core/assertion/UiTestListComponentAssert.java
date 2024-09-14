@@ -1,6 +1,5 @@
 package com.github.ui.test.core.assertion;
 
-import com.github.ui.test.core.UiTestEnvironment;
 import com.github.ui.test.core.component.UiTestComponent;
 import com.github.ui.test.core.component.UiTestComponentList;
 import com.github.ui.test.core.predicate.UiTestComponentPredicate;
@@ -8,8 +7,6 @@ import org.assertj.core.api.Assert;
 
 import java.util.Arrays;
 import java.util.List;
-
-import static com.github.ui.test.core.UiTestEnvironment.hasText;
 
 public interface UiTestListComponentAssert<SELF extends UiTestListComponentAssert<SELF, ITEM>, ITEM extends UiTestComponent>
         extends Assert<SELF, UiTestComponentList<ITEM>> {
@@ -23,7 +20,7 @@ public interface UiTestListComponentAssert<SELF extends UiTestListComponentAsser
     SELF isNotEmpty();
 
     default SELF containsElementWithText(String text) {
-        return contains(hasText(text));
+        return contains(UiTestComponentPredicate.hasText(text));
     }
 
     SELF contains(UiTestComponentPredicate predicate);
@@ -36,7 +33,7 @@ public interface UiTestListComponentAssert<SELF extends UiTestListComponentAsser
 
     default SELF containsExactlyElementsWithText(List<String> itemTexts) {
         return containsExactly(itemTexts.stream()
-                .map(UiTestEnvironment::hasText)
+                .map(UiTestComponentPredicate::hasText)
                 .toList()
         );
     }

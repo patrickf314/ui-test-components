@@ -5,7 +5,7 @@ import com.github.ui.test.core.context.UiTestComponentContext;
 
 import java.util.regex.Pattern;
 
-import static com.github.ui.test.playwright.PlaywrightUiTestEnvironment.matches;
+import static com.github.ui.test.core.predicate.UiTestComponentPredicate.matches;
 import static com.github.ui.test.playwright.component.PlaywrightComponentFactory.requirePlaywrightContext;
 
 public class PlaywrightSelectComponent extends HtmlSelectComponent {

@@ -2,14 +2,14 @@ package com.github.ui.test.playwright.predicate;
 
 import com.github.ui.test.core.exception.IllegalContextException;
 import com.github.ui.test.core.predicate.UiTestComponentPredicate;
-import com.github.ui.test.core.predicate.UiTestComponentPredicates;
+import com.github.ui.test.core.predicate.UiTestComponentPredicateFactory;
 import com.github.ui.test.core.selector.Selector;
-import com.github.ui.test.playwright.selector.PlaywrightSelectors;
+import com.github.ui.test.playwright.selector.PlaywrightSelectorFactory;
 
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class PlaywrightComponentPredicates implements UiTestComponentPredicates {
+public class PlaywrightComponentPredicateFactory implements UiTestComponentPredicateFactory {
 
     public PlaywrightComponentPredicate isVisible() {
         return new PlaywrightComponentVisiblePredicate(false);
@@ -24,15 +24,15 @@ public class PlaywrightComponentPredicates implements UiTestComponentPredicates 
     }
 
     public PlaywrightComponentPredicate hasChild(String label, Selector childSelector, UiTestComponentPredicate childPredicate) {
-        return new PlaywrightChildComponentPredicate(label, false, PlaywrightSelectors.requirePlaywrightSelector(childSelector), requirePlaywrightPredicate(childPredicate));
+        return new PlaywrightChildComponentPredicate(label, false, PlaywrightSelectorFactory.requirePlaywrightSelector(childSelector), requirePlaywrightPredicate(childPredicate));
     }
 
     public PlaywrightComponentPredicate allOf(List<UiTestComponentPredicate> predicates) {
-        return new PlaywrightComponentAllOfPredicate(predicates.stream().map(PlaywrightComponentPredicates::requirePlaywrightPredicate).toList());
+        return new PlaywrightComponentAllOfPredicate(predicates.stream().map(PlaywrightComponentPredicateFactory::requirePlaywrightPredicate).toList());
     }
 
     public PlaywrightComponentPredicate anyOf(List<UiTestComponentPredicate> predicates) {
-        return new PlaywrightComponentAnyOfPredicate(predicates.stream().map(PlaywrightComponentPredicates::requirePlaywrightPredicate).toList());
+        return new PlaywrightComponentAnyOfPredicate(predicates.stream().map(PlaywrightComponentPredicateFactory::requirePlaywrightPredicate).toList());
     }
 
     public static PlaywrightComponentPredicate requirePlaywrightPredicate(UiTestComponentPredicate predicate) {

@@ -2,7 +2,7 @@ package com.github.ui.test.core.component;
 
 import com.github.ui.test.core.context.UiTestComponentContext;
 
-import static com.github.ui.test.core.UiTestEnvironment.hasText;
+import static com.github.ui.test.core.predicate.UiTestComponentPredicate.hasText;
 
 public abstract class DefinitionListComponent<T extends UiTestComponent, D extends UiTestComponent> extends UiTestComponent {
 

@@ -50,7 +50,7 @@ public class PlaywrightComponentAnyOfPredicate implements PlaywrightComponentPre
     @Override
     public PlaywrightComponentPredicate or(UiTestComponentPredicate other) {
         var copy = new ArrayList<>(predicates);
-        copy.add(PlaywrightComponentPredicates.requirePlaywrightPredicate(other));
+        copy.add(PlaywrightComponentPredicateFactory.requirePlaywrightPredicate(other));
         return new PlaywrightComponentAnyOfPredicate(copy);
     }
 

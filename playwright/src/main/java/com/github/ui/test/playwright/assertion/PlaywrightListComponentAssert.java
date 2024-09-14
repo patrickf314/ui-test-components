@@ -3,9 +3,8 @@ package com.github.ui.test.playwright.assertion;
 import com.github.ui.test.core.assertion.UiTestListComponentAssert;
 import com.github.ui.test.core.component.UiTestComponent;
 import com.github.ui.test.core.component.UiTestComponentList;
-import com.github.ui.test.playwright.context.PlaywrightComponentContext;
 import com.github.ui.test.core.predicate.UiTestComponentPredicate;
-import com.github.ui.test.playwright.predicate.PlaywrightComponentHasTextPredicate;
+import com.github.ui.test.playwright.context.PlaywrightComponentContext;
 import lombok.extern.slf4j.Slf4j;
 import org.opentest4j.AssertionFailedError;
 
@@ -13,6 +12,7 @@ import java.util.List;
 
 import static com.github.ui.test.playwright.assertion.PlaywrightUiTestAssertions.assertThat;
 import static com.github.ui.test.playwright.component.PlaywrightComponentFactory.requirePlaywrightContext;
+import static com.github.ui.test.playwright.predicate.PlaywrightComponentPredicateFactory.requirePlaywrightPredicate;
 
 @Slf4j
 public class PlaywrightListComponentAssert<T extends UiTestComponent>
@@ -30,11 +30,6 @@ public class PlaywrightListComponentAssert<T extends UiTestComponent>
     }
 
     @Override
-    protected PlaywrightListComponentAssert<T> self() {
-        return this;
-    }
-
-    @Override
     public PlaywrightListComponentAssert<T> hasSize(int size) {
         locatorAssertions().hasCount(size);
         return this;
@@ -48,19 +43,10 @@ public class PlaywrightListComponentAssert<T extends UiTestComponent>
 
     @Override
     public PlaywrightListComponentAssert<T> contains(UiTestComponentPredicate predicate) {
-        if (predicate instanceof PlaywrightComponentHasTextPredicate hasTextPredicate) {
-            locatorAssertions().containsText(new String[]{hasTextPredicate.getText()});
-            return this;
-        }
-
         try {
             filteredListAssert(predicate).isNotEmpty();
         } catch (AssertionFailedError e) {
-            failWithActualExpectedAndMessage(
-                    predicate.describeActual(getActualContext()),
-                    predicate.describeExpected(),
-                    e.getMessage()
-            );
+            throw withDescribedPredicate(e, requirePlaywrightPredicate(predicate));
         }
         return this;
     }

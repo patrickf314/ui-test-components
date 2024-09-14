@@ -2,8 +2,8 @@ package com.github.ui.test.playwright.context;
 
 import com.github.ui.test.core.data.UiTestDownload;
 import com.github.ui.test.playwright.component.PlaywrightListComponent;
-import com.github.ui.test.playwright.predicate.PlaywrightComponentPredicates;
-import com.github.ui.test.playwright.selector.PlaywrightSelectors;
+import com.github.ui.test.playwright.predicate.PlaywrightComponentPredicateFactory;
+import com.github.ui.test.playwright.selector.PlaywrightSelectorFactory;
 import com.microsoft.playwright.Locator;
 import com.github.ui.test.core.component.UiTestComponent;
 import com.github.ui.test.core.component.UiTestPage;
@@ -38,13 +38,13 @@ public class PlaywrightComponentContext implements UiTestComponentContext {
 
     @Override
     public <T extends UiTestComponent> T getChild(Function<UiTestComponentContext, T> component, Selector selector) {
-        return component.apply(new PlaywrightComponentContext(pageContext, PlaywrightSelectors.requirePlaywrightSelector(selector).asChildLocatorOf(locator)));
+        return component.apply(new PlaywrightComponentContext(pageContext, PlaywrightSelectorFactory.requirePlaywrightSelector(selector).asChildLocatorOf(locator)));
     }
 
     @Override
     public <T extends UiTestComponent> PlaywrightListComponent<T> getChildList(Function<UiTestComponentContext, T> component, Selector selector) {
         return new PlaywrightListComponent<>(
-                new PlaywrightComponentContext(pageContext, PlaywrightSelectors.requirePlaywrightSelector(selector).asChildLocatorOf(locator)),
+                new PlaywrightComponentContext(pageContext, PlaywrightSelectorFactory.requirePlaywrightSelector(selector).asChildLocatorOf(locator)),
                 component
         );
     }
@@ -74,7 +74,7 @@ public class PlaywrightComponentContext implements UiTestComponentContext {
 
     public <T extends UiTestComponent> PlaywrightListComponent<T> filter(Function<UiTestComponentContext, T> itemConstructor, UiTestComponentPredicate predicate) {
         return new PlaywrightListComponent<>(
-                new PlaywrightComponentContext(pageContext, PlaywrightComponentPredicates.requirePlaywrightPredicate(predicate).filter(pageContext.getPage(), locator)),
+                new PlaywrightComponentContext(pageContext, PlaywrightComponentPredicateFactory.requirePlaywrightPredicate(predicate).filter(pageContext.getPage(), locator)),
                 itemConstructor
         );
     }
@@ -99,7 +99,7 @@ public class PlaywrightComponentContext implements UiTestComponentContext {
     private Locator select(Selector... selectors) {
         var childSelector = locator;
         for(var selector : selectors) {
-            childSelector = PlaywrightSelectors.requirePlaywrightSelector(selector).asChildLocatorOf(childSelector);
+            childSelector = PlaywrightSelectorFactory.requirePlaywrightSelector(selector).asChildLocatorOf(childSelector);
         }
         return childSelector;
     }

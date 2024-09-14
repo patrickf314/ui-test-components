@@ -7,7 +7,7 @@ import com.github.ui.test.core.context.UiTestComponentContext;
 
 import java.util.function.Function;
 
-import static com.github.ui.test.playwright.PlaywrightUiTestEnvironment.byCSSSelector;
+import static com.github.ui.test.core.selector.Selector.byCSSSelector;
 
 public class PlaywrightDefinitionListComponent<T extends UiTestComponent, D extends UiTestComponent> extends DefinitionListComponent<T, D> {
 

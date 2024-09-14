@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.function.Function;
 
-import static com.github.ui.test.playwright.selector.PlaywrightSelectors.requirePlaywrightSelector;
+import static com.github.ui.test.playwright.selector.PlaywrightSelectorFactory.requirePlaywrightSelector;
 
 @Getter
 @RequiredArgsConstructor

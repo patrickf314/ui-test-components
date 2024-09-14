@@ -2,14 +2,12 @@ package com.github.ui.test.playwright.assertion;
 
 import com.github.ui.test.core.assertion.UiTestComponentAssert;
 import com.github.ui.test.core.component.UiTestComponent;
-import com.github.ui.test.playwright.context.PlaywrightComponentContext;
 import com.github.ui.test.core.predicate.UiTestComponentPredicate;
 import com.github.ui.test.playwright.component.PlaywrightComponentFactory;
+import com.github.ui.test.playwright.context.PlaywrightComponentContext;
 import com.github.ui.test.playwright.predicate.PlaywrightComponentHasTextPredicate;
-import com.github.ui.test.playwright.predicate.PlaywrightComponentPredicates;
+import com.github.ui.test.playwright.predicate.PlaywrightComponentPredicateFactory;
 import com.github.ui.test.playwright.predicate.PlaywrightComponentVisiblePredicate;
-
-import static com.github.ui.test.playwright.predicate.PlaywrightComponentHasTextPredicate.describeText;
 
 public abstract class AbstractPlaywrightComponentAssert<SELF extends AbstractPlaywrightComponentAssert<SELF, ACTUAl>, ACTUAl extends UiTestComponent>
         extends AbstractPlaywrightAssert<SELF, ACTUAl>
@@ -26,7 +24,7 @@ public abstract class AbstractPlaywrightComponentAssert<SELF extends AbstractPla
         } catch (AssertionError e) {
             throw withActualExpected(e, PlaywrightComponentVisiblePredicate.INVISIBLE, PlaywrightComponentVisiblePredicate.VISIBLE);
         }
-        return self();
+        return myself;
     }
 
     @Override
@@ -36,7 +34,7 @@ public abstract class AbstractPlaywrightComponentAssert<SELF extends AbstractPla
         } catch (AssertionError e) {
             throw withActualExpected(e, PlaywrightComponentVisiblePredicate.VISIBLE, PlaywrightComponentVisiblePredicate.INVISIBLE);
         }
-        return self();
+        return myself;
     }
 
     @Override
@@ -46,7 +44,7 @@ public abstract class AbstractPlaywrightComponentAssert<SELF extends AbstractPla
         } catch (AssertionError e) {
             throw withActualExpected(e, PlaywrightComponentHasTextPredicate.describeText(getActualLocator().textContent()), PlaywrightComponentHasTextPredicate.describeText(text));
         }
-        return self();
+        return myself;
     }
 
     @Override
@@ -56,7 +54,7 @@ public abstract class AbstractPlaywrightComponentAssert<SELF extends AbstractPla
         } catch (AssertionError e) {
             throw withActualExpected(e, PlaywrightComponentHasTextPredicate.describeText(getActualLocator().textContent()), PlaywrightComponentHasTextPredicate.describeNotText(text));
         }
-        return self();
+        return myself;
     }
 
     @Override
@@ -67,29 +65,21 @@ public abstract class AbstractPlaywrightComponentAssert<SELF extends AbstractPla
             var actual = getActualLocator().getAttribute(name);
             throw withActualExpected(e,
                     "attribute('" + name + "', " + (actual == null ? "<NULL>" : "'" + actual + "'") + ")",
-                    "attribute('" + name + "', '" + value + "')");
+                    "attribute('" + name + "', '" + value + "')"
+            );
         }
-        return self();
+        return myself;
     }
 
     @Override
     public SELF satisfies(UiTestComponentPredicate predicate) {
-        if (predicate instanceof PlaywrightComponentHasTextPredicate hasTextPredicate) {
-            return hasTextPredicate.isNot() ? doesNotHaveText(hasTextPredicate.getText()) : hasText(hasTextPredicate.getText());
-        }
-
-        if (predicate instanceof PlaywrightComponentVisiblePredicate visiblePredicate) {
-            return visiblePredicate.isNot() ? isNotVisible() : isVisible();
-        }
-
-        var playwrightPredicate = PlaywrightComponentPredicates.requirePlaywrightPredicate(predicate);
+        var playwrightPredicate = PlaywrightComponentPredicateFactory.requirePlaywrightPredicate(predicate);
         try {
             locatorAssertions(playwrightPredicate.filter(getActualPage(), getActualLocator())).hasCount(1);
         } catch (AssertionError e) {
             throw withDescribedPredicate(e, playwrightPredicate);
         }
-
-        return self();
+        return myself;
     }
 
     protected PlaywrightComponentContext getActualContext() {

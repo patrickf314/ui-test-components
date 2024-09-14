@@ -5,8 +5,8 @@ import com.github.ui.test.core.component.UiTestComponent;
 import com.github.ui.test.core.component.UiTestPage;
 import com.github.ui.test.core.context.UiTestPageContext;
 
-import static com.github.ui.test.core.UiTestEnvironment.byCSSSelector;
 import static com.github.ui.test.core.UiTestEnvironment.inputComponent;
+import static com.github.ui.test.core.selector.Selector.byCSSSelector;
 
 public class TestPage extends UiTestPage {
 

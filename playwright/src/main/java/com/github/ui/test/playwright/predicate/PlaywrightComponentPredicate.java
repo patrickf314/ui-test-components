@@ -22,12 +22,12 @@ public interface PlaywrightComponentPredicate extends UiTestComponentPredicate {
 
     @Override
     default PlaywrightComponentPredicate and(UiTestComponentPredicate other) {
-        return new PlaywrightComponentAllOfPredicate(List.of(this, PlaywrightComponentPredicates.requirePlaywrightPredicate(other)));
+        return new PlaywrightComponentAllOfPredicate(List.of(this, PlaywrightComponentPredicateFactory.requirePlaywrightPredicate(other)));
     }
 
     @Override
     default PlaywrightComponentPredicate or(UiTestComponentPredicate other) {
-        return new PlaywrightComponentAnyOfPredicate(List.of(this, PlaywrightComponentPredicates.requirePlaywrightPredicate(other)));
+        return new PlaywrightComponentAnyOfPredicate(List.of(this, PlaywrightComponentPredicateFactory.requirePlaywrightPredicate(other)));
     }
 
     Locator filter(Page page, Locator locator);

@@ -5,7 +5,7 @@ import com.github.ui.test.core.selector.Selector;
 
 import java.util.function.Function;
 
-import static com.github.ui.test.core.UiTestEnvironment.byCSSSelector;
+import static com.github.ui.test.core.selector.Selector.byCSSSelector;
 
 public class TableRowComponent extends UiTestComponent {
 

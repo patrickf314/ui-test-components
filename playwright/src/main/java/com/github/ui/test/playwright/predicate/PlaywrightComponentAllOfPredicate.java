@@ -49,7 +49,7 @@ public class PlaywrightComponentAllOfPredicate implements PlaywrightComponentPre
     @Override
     public PlaywrightComponentPredicate and(UiTestComponentPredicate other) {
         var copy = new ArrayList<>(predicates);
-        copy.add(PlaywrightComponentPredicates.requirePlaywrightPredicate(other));
+        copy.add(PlaywrightComponentPredicateFactory.requirePlaywrightPredicate(other));
         return new PlaywrightComponentAllOfPredicate(copy);
     }
 

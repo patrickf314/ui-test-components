@@ -8,8 +8,4 @@ public class PlaywrightComponentAssert<T extends UiTestComponent> extends Abstra
         super(actual, PlaywrightComponentAssert.class);
     }
 
-    @Override
-    protected PlaywrightComponentAssert<T> self() {
-        return this;
-    }
 }

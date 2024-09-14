@@ -17,8 +17,6 @@ public abstract class AbstractPlaywrightAssert<SELF extends AbstractPlaywrightAs
 
     protected abstract PlaywrightComponentContext getActualContext();
 
-    protected abstract SELF self();
-
     protected Locator getActualLocator() {
         return getActualContext().getLocator();
     }

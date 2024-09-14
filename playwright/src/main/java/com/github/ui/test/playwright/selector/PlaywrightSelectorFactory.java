@@ -1,15 +1,19 @@
 package com.github.ui.test.playwright.selector;
 
-import com.github.ui.test.core.selector.UiTestSelectors;
-import com.microsoft.playwright.Locator;
-import com.microsoft.playwright.Page;
 import com.github.ui.test.core.exception.IllegalContextException;
 import com.github.ui.test.core.selector.Selector;
+import com.github.ui.test.core.selector.SelectorFactory;
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
 
 import java.util.List;
 
-public class PlaywrightSelectors implements UiTestSelectors {
+/**
+ * Playwright implementation of a {@link SelectorFactory}
+ */
+public class PlaywrightSelectorFactory implements SelectorFactory {
 
+    @Override
     public Selector byCSSSelector(String cssSelector) {
         return new PlaywrightLocatorSelector(
                 "byCSSSelector('" + cssSelector + "')",
@@ -18,6 +22,7 @@ public class PlaywrightSelectors implements UiTestSelectors {
         );
     }
 
+    @Override
     public Selector byText(String text) {
         return new PlaywrightLocatorSelector(
                 "byText('" + text + "')",
@@ -26,6 +31,7 @@ public class PlaywrightSelectors implements UiTestSelectors {
         );
     }
 
+    @Override
     public Selector byTestId(String testId) {
         return new PlaywrightLocatorSelector(
                 "byTestId('" + testId + "')",
@@ -34,6 +40,7 @@ public class PlaywrightSelectors implements UiTestSelectors {
         );
     }
 
+    @Override
     public Selector byXPath(String xPath) {
         return new PlaywrightLocatorSelector(
                 "byXPath('" + xPath + "')",
@@ -42,12 +49,28 @@ public class PlaywrightSelectors implements UiTestSelectors {
         );
     }
 
+    @Override
     public Selector chained(List<Selector> selectors) {
+        if (selectors.isEmpty()) {
+            throw new IllegalArgumentException("selectors must not be empty");
+        }
+
+        if (selectors.size() == 1) {
+            return selectors.get(0);
+        }
+
         return new PlaywrightChainedSelector(selectors.stream()
-                .map(PlaywrightSelectors::requirePlaywrightSelector)
+                .map(PlaywrightSelectorFactory::requirePlaywrightSelector)
                 .toList());
     }
 
+    /**
+     * Requires that the given selector is a {@link PlaywrightSelector}.
+     *
+     * @param selector the selector to check
+     * @return the given selector
+     * @throws IllegalContextException if the selector is not a {@link PlaywrightSelector}
+     */
     public static PlaywrightSelector requirePlaywrightSelector(Selector selector) {
         if (selector instanceof PlaywrightSelector playwrightSelector) {
             return playwrightSelector;

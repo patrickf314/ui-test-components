@@ -4,7 +4,7 @@ import com.github.ui.test.core.context.UiTestComponentContext;
 
 import java.util.regex.Pattern;
 
-import static com.github.ui.test.core.UiTestEnvironment.byCSSSelector;
+import static com.github.ui.test.core.selector.Selector.byCSSSelector;
 
 public abstract class HtmlSelectComponent extends UiTestComponent {
 

@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.function.Function;
 
-import static com.github.ui.test.core.UiTestEnvironment.chained;
+import static com.github.ui.test.core.selector.Selector.chained;
 
 @Getter
 @RequiredArgsConstructor

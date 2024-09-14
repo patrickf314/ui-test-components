@@ -1,41 +1,41 @@
 package com.github.ui.test.playwright.predicate;
 
+import com.github.ui.test.core.predicate.UiTestComponentPredicate;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.util.regex.Pattern;
 
-import static com.github.ui.test.playwright.predicate.PlaywrightComponentHasTextPredicate.describeText;
+/**
+ * Implementation of a {@link UiTestComponentPredicate} which matches
+ * the text of a {@link com.github.ui.test.core.component.UiTestComponent}.
+ * This predicate matches the text using a RegExp {@link Pattern}
+ *
+ * @see PlaywrightComponentContainsTextPredicate
+ */
+public class PlaywrightComponentMatchesPatternPredicate extends AbstractPlaywrightComponentTextPredicate {
 
-@Getter
-@RequiredArgsConstructor
-public class PlaywrightComponentMatchesPatternPredicate implements PlaywrightComponentPredicate {
-
-    private final boolean not;
     private final Pattern pattern;
 
-    public String describePattern() {
-        return "matches('" + pattern + "')";
-    }
+    /**
+     * Constructor
+     *
+     * @param not     true if the predicate is negated
+     * @param pattern the pattern to match
+     */
+    public PlaywrightComponentMatchesPatternPredicate(boolean not, Pattern pattern) {
+        super(not);
 
-    public String describeNotText() {
-        return "not " + describePattern();
+        this.pattern = pattern;
     }
 
     @Override
     public String describeExpected() {
         if (not) {
-            return describeNotText();
+            return "does not match('" + pattern + "')";
         } else {
-            return describePattern();
+            return "matches('" + pattern + "')";
         }
-    }
-
-    @Override
-    public String describeActual(Locator actual) {
-        return PlaywrightComponentHasTextPredicate.describeText(actual);
     }
 
     @Override

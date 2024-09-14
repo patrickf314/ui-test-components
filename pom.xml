@@ -17,6 +17,7 @@
         <lombok.version>1.18.34</lombok.version>
         <playwright.version>1.46.0</playwright.version>
         <junit.version>5.11.0</junit.version>
+        <easyrandom.version>5.0.0</easyrandom.version>
         <assertj.version>3.26.3</assertj.version>
         <slf4j-api.version>2.0.16</slf4j-api.version>
     </properties>

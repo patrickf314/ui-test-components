@@ -6,7 +6,7 @@ import com.github.ui.test.core.context.UiTestComponentContext;
 
 import java.util.function.Function;
 
-import static com.github.ui.test.playwright.PlaywrightUiTestEnvironment.byXPath;
+import static com.github.ui.test.core.selector.Selector.byXPath;
 
 public class PlaywrightDefinitionListEntryComponent<T extends UiTestComponent, D extends UiTestComponent> extends DefinitionListComponent.Entry<T, D> {
 

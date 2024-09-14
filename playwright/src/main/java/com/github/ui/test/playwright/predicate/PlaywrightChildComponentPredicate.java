@@ -17,7 +17,7 @@ public class PlaywrightChildComponentPredicate implements PlaywrightComponentPre
 
     @Override
     public String describeExpected() {
-        return label + " = " + (not ? "not(" + childPredicate.describeExpected() + ")" : childPredicate.describeExpected());
+        return label + " = " + (not ? "not " : "") + childPredicate.describeExpected();
     }
 
     @Override

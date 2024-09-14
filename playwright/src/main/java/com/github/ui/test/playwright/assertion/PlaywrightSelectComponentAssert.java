@@ -11,11 +11,6 @@ public class PlaywrightSelectComponentAssert<T extends HtmlSelectComponent>
         super(actual, PlaywrightSelectComponentAssert.class);
     }
 
-    @Override
-    protected PlaywrightSelectComponentAssert<T> self() {
-        return this;
-    }
-
     public PlaywrightSelectComponentAssert<T> hasOptions(String... options) {
         var optionsLocator = getActualLocator().locator("option");
         locatorAssertions(optionsLocator).hasCount(options.length);
