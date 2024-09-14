@@ -25,7 +25,7 @@ public class PlaywrightContext implements UiTestContext {
 
     @Override
     public void close() {
-        log.info("Closing test context for {} finished", testName);
+        log.info("Closing test context for {}", testName);
 
         browserContext.tracing().stop(new Tracing.StopOptions()
                 .setPath(Paths.get(outputDirectory, "traces", testName.replace('.', File.separatorChar) + ".zip"))
