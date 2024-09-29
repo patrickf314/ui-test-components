@@ -2,9 +2,8 @@ package com.github.ui.test.core.assertion;
 
 import com.github.ui.test.core.component.HtmlSelectComponent;
 
-public interface HtmlSelectComponentAssert<SELF extends HtmlSelectComponentAssert<SELF, ACTUAL>, ACTUAL extends HtmlSelectComponent>
-        extends UiTestComponentAssert<SELF, ACTUAL> {
+public interface HtmlSelectComponentAssert<T extends HtmlSelectComponent> extends UiTestComponentAssert<T> {
 
-    HtmlSelectComponentAssert<SELF, ACTUAL> hasOptions(String... options);
+    HtmlSelectComponentAssert<T> hasOptions(String... options);
 
 }

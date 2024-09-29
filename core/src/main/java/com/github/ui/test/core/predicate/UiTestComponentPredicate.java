@@ -3,7 +3,9 @@ package com.github.ui.test.core.predicate;
 import com.github.ui.test.core.context.UiTestComponentContext;
 import com.github.ui.test.core.selector.Selector;
 
+import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import static com.github.ui.test.core.UiTestEnvironment.getEnvironment;
 
@@ -63,7 +65,21 @@ public interface UiTestComponentPredicate {
      * @return the combined predicates
      */
     static UiTestComponentPredicate allOf(UiTestComponentPredicate predicate, UiTestComponentPredicate... other) {
-        return getEnvironment().getPredicateFactory().allOf(predicate, other);
+        if (other.length == 0) {
+            return predicate;
+        }
+
+        return allOf(asList(predicate, other));
+    }
+
+    /**
+     * Combines multiple predicate to one using a logical and.
+     *
+     * @param predicates a list of predicate to combine
+     * @return the combined predicates
+     */
+    static UiTestComponentPredicate allOf(List<UiTestComponentPredicate> predicates) {
+        return getEnvironment().getPredicateFactory().allOf(predicates);
     }
 
     /**
@@ -74,7 +90,21 @@ public interface UiTestComponentPredicate {
      * @return the combined predicates
      */
     static UiTestComponentPredicate anyOf(UiTestComponentPredicate predicate, UiTestComponentPredicate... other) {
-        return getEnvironment().getPredicateFactory().anyOf(predicate, other);
+        if (other.length == 0) {
+            return predicate;
+        }
+
+        return anyOf(asList(predicate, other));
+    }
+
+    /**
+     * Combines multiple predicate to one using a logical or.
+     *
+     * @param predicates a list of predicate to combine
+     * @return the combined predicates
+     */
+    static UiTestComponentPredicate anyOf(List<UiTestComponentPredicate> predicates) {
+        return getEnvironment().getPredicateFactory().anyOf(predicates);
     }
 
     /**
@@ -85,7 +115,32 @@ public interface UiTestComponentPredicate {
      * @return the combined predicates
      */
     static UiTestComponentPredicate noneOf(UiTestComponentPredicate predicate, UiTestComponentPredicate... other) {
-        return getEnvironment().getPredicateFactory().noneOf(predicate, other);
+        return noneOf(asList(predicate, other));
+    }
+
+    /**
+     * Combines multiple predicate to one requiring that the element does not match any of the given predicate
+     *
+     * @param predicates a list of predicate to combine
+     * @return the combined predicates
+     */
+    static UiTestComponentPredicate noneOf(List<UiTestComponentPredicate> predicates) {
+        return noneOf(predicates).negate();
+    }
+
+    static UiTestComponentPredicate descriptionListEntry(String title, UiTestComponentPredicate descriptionPredicate) {
+        return descriptionListEntry(hasText(title), descriptionPredicate);
+    }
+
+    static UiTestComponentPredicate descriptionListEntry(UiTestComponentPredicate titlePredicate, UiTestComponentPredicate descriptionPredicate) {
+        return getEnvironment().getPredicateFactory().descriptionListEntry(titlePredicate, descriptionPredicate);
+    }
+
+    private static List<UiTestComponentPredicate> asList(UiTestComponentPredicate predicate, UiTestComponentPredicate... other) {
+        return Stream.concat(
+                Stream.of(predicate),
+                Stream.of(other)
+        ).toList();
     }
 
     /**

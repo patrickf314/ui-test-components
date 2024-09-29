@@ -1,15 +1,13 @@
 package com.github.ui.test.core;
 
-import com.github.ui.test.core.browser.UiTestBrowser;
-import com.github.ui.test.core.component.*;
-import com.github.ui.test.core.context.UiTestComponentContext;
-import com.github.ui.test.core.context.UiTestContext;
+import com.github.ui.test.core.assertion.UiTestAssertFactory;
+import com.github.ui.test.core.component.UiTestComponentFactory;
 import com.github.ui.test.core.predicate.UiTestComponentPredicateFactory;
 import com.github.ui.test.core.selector.SelectorFactory;
 
-import java.util.function.Function;
+import java.util.function.Supplier;
 
-public abstract class UiTestEnvironment {
+public abstract class UiTestEnvironment implements AutoCloseable {
 
     private static UiTestEnvironment instance;
 
@@ -21,71 +19,25 @@ public abstract class UiTestEnvironment {
         return instance;
     }
 
-    public static void registerEnvironment(UiTestEnvironment environment) {
-        if (instance != null) {
-            throw new IllegalStateException("UiTestEnvironment has already been registered.");
+    protected static <T extends UiTestEnvironment> void ensureCorrectEnvironment(Class<T> environmentType, Supplier<T> environmentSupplier) {
+        if (instance == null) {
+            instance = environmentSupplier.get();
         }
 
-        instance = environment;
+        if (!environmentType.isInstance(instance)) {
+            throw new IllegalStateException("A different UiTestEnvironment has been registered.");
+        }
     }
 
-    public static UiTestContext createNewTestContext(String baseUrl, String outputDirectory, String testName) {
-        return getEnvironment().getBrowser().createNewTestContext(baseUrl, outputDirectory, testName);
-    }
-
-    // #################################################################################################################
-    // # Components
-    // #################################################################################################################
-
-    public static Function<UiTestComponentContext, HtmlInputComponent> inputComponent() {
-        return getEnvironment().getComponentFactory()::inputComponent;
-    }
-
-    public static Function<UiTestComponentContext, HtmlCheckboxComponent> checkboxComponent() {
-        return getEnvironment().getComponentFactory()::checkboxComponent;
-    }
-
-    public static Function<UiTestComponentContext, HtmlTextAreaComponent> textAreaComponent() {
-        return getEnvironment().getComponentFactory()::textAreaComponent;
-    }
-
-    public static Function<UiTestComponentContext, UiTestComponent> buttonComponent() {
-        return getEnvironment().getComponentFactory()::buttonComponent;
-    }
-
-    public static Function<UiTestComponentContext, HtmlSelectComponent> selectComponent() {
-        return getEnvironment().getComponentFactory()::selectComponent;
-    }
-
-    public static Function<UiTestComponentContext, DefinitionListComponent<UiTestComponent, UiTestComponent>> definitionList() {
-        return definitionList(UiTestComponent::new);
-    }
-
-    public static <D extends UiTestComponent> Function<UiTestComponentContext, DefinitionListComponent<UiTestComponent, D>> definitionList(
-            Function<UiTestComponentContext, D> descriptionConstructor) {
-        return definitionList(UiTestComponent::new, descriptionConstructor);
-    }
-
-    public static <T extends UiTestComponent, D extends UiTestComponent> Function<UiTestComponentContext, DefinitionListComponent<T, D>> definitionList(
-            Function<UiTestComponentContext, T> titleConstructor,
-            Function<UiTestComponentContext, D> descriptionConstructor) {
-        return context -> getEnvironment().getComponentFactory().definitionListComponent(context, titleConstructor, descriptionConstructor);
-    }
-
-    public static <T extends UiTestComponent> Function<UiTestComponentContext, UiTestTableComponent<T>> tableComponent(Function<UiTestComponentContext, T> entryConstructor) {
-        return context -> getEnvironment().getComponentFactory().tableComponent(context, entryConstructor);
-    }
-
-    // #################################################################################################################
-    // # Predicates
-    // #################################################################################################################
-
-    public abstract UiTestBrowser getBrowser();
+    @Override
+    public abstract void close();
 
     public abstract UiTestComponentFactory getComponentFactory();
 
     public abstract UiTestComponentPredicateFactory getPredicateFactory();
 
     public abstract SelectorFactory getSelectorFactory();
+
+    public abstract UiTestAssertFactory getAssertFactory();
 
 }

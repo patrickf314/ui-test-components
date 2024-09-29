@@ -1,13 +1,13 @@
+// Waits until a button does not have the disabled attribute
 // noinspection BadExpressionStatementJS
 /**
  * Waits for the given node to not be disabled.
  *
  * @param {HTMLButtonElement} node the node
+ * @param {{timeout: number}} arg the argument
  * @returns {Promise<void>} the promise resolving when the button is not disabled
  */
-node => new Promise((resolve, reject) => {
-    const timeout = 10; //second
-
+(node, {timeout}) => new Promise((resolve, reject) => {
     let counter = timeout * 20;
 
     function checkDisabled() {
@@ -17,7 +17,7 @@ node => new Promise((resolve, reject) => {
             return;
         }
 
-        if (node.disabled) {
+        if (node.disabled && document.contains(node)) {
             setTimeout(checkDisabled, 50);
         } else {
             resolve();

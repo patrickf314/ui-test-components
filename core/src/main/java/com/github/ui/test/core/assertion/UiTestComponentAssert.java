@@ -2,19 +2,18 @@ package com.github.ui.test.core.assertion;
 
 import com.github.ui.test.core.component.UiTestComponent;
 import com.github.ui.test.core.predicate.UiTestComponentPredicate;
-import org.assertj.core.api.Assert;
 
-public interface UiTestComponentAssert<SELF extends UiTestComponentAssert<SELF, ACTUAL>, ACTUAL extends UiTestComponent> extends Assert<SELF, ACTUAL> {
+public interface UiTestComponentAssert<T extends UiTestComponent> {
 
-    SELF isVisible();
+    UiTestComponentAssert<T> isVisible();
 
-    SELF isNotVisible();
+    UiTestComponentAssert<T> isNotVisible();
 
-    SELF hasText(String text);
+    UiTestComponentAssert<T> hasText(String text);
 
-    SELF doesNotHaveText(String text);
+    UiTestComponentAssert<T> doesNotHaveText(String text);
 
-    SELF hasAttribute(String name, String value);
+    UiTestComponentAssert<T> hasAttribute(String name, String value);
 
-    SELF satisfies(UiTestComponentPredicate predicate);
+    UiTestComponentAssert<T> satisfies(UiTestComponentPredicate predicate);
 }

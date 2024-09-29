@@ -3,6 +3,8 @@ package com.github.ui.test.playwright.component;
 import com.github.ui.test.core.component.HtmlInputComponent;
 import com.github.ui.test.core.context.UiTestComponentContext;
 
+import static com.github.ui.test.playwright.component.PlaywrightComponentFactory.requirePlaywrightContext;
+
 public class PlaywrightInputComponent extends HtmlInputComponent {
 
     public PlaywrightInputComponent(UiTestComponentContext context) {
@@ -11,10 +13,10 @@ public class PlaywrightInputComponent extends HtmlInputComponent {
 
     @Override
     public void setValue(String value) {
-        var context = PlaywrightComponentFactory.requirePlaywrightContext(getContext());
+        var context = requirePlaywrightContext(getContext());
 
         context.getLocator().fill(value);
-        context.evaluateScript("waitUntilInputLoadingFinished.js");
+        context.evaluateScript("/js/waitUntilLoadingFinished.js");
     }
 
     @Override

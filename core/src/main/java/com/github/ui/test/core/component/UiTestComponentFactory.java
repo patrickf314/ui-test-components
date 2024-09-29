@@ -16,6 +16,8 @@ public interface UiTestComponentFactory {
 
     HtmlSelectComponent selectComponent(UiTestComponentContext context);
 
+    HtmlFileInputComponent fileInputComponent(UiTestComponentContext context);
+
     <T extends UiTestComponent, D extends UiTestComponent> DefinitionListComponent<T, D> definitionListComponent(UiTestComponentContext context, Function<UiTestComponentContext, T> titleConstructor, Function<UiTestComponentContext, D> descriptionConstructor);
 
     default <T extends UiTestComponent> UiTestTableComponent<T> tableComponent(UiTestComponentContext context, Function<UiTestComponentContext, T> entryConstructor) {

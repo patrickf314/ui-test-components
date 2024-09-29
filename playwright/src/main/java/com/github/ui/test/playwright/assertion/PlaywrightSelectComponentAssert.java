@@ -5,7 +5,7 @@ import com.github.ui.test.core.component.HtmlSelectComponent;
 
 public class PlaywrightSelectComponentAssert<T extends HtmlSelectComponent>
         extends AbstractPlaywrightComponentAssert<PlaywrightSelectComponentAssert<T>, T>
-        implements HtmlSelectComponentAssert<PlaywrightSelectComponentAssert<T>, T> {
+        implements HtmlSelectComponentAssert<T> {
 
     public PlaywrightSelectComponentAssert(T actual) {
         super(actual, PlaywrightSelectComponentAssert.class);

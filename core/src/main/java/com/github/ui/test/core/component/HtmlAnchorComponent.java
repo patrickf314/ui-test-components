@@ -5,9 +5,9 @@ import com.github.ui.test.core.context.UiTestPageContext;
 
 import java.util.function.Function;
 
-public class UiTestAnchorComponent extends UiTestComponent {
+public class HtmlAnchorComponent extends UiTestComponent {
 
-    public UiTestAnchorComponent(UiTestComponentContext context) {
+    public HtmlAnchorComponent(UiTestComponentContext context) {
         super(context);
     }
 

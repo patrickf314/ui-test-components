@@ -11,7 +11,7 @@ import com.github.ui.test.playwright.predicate.PlaywrightComponentVisiblePredica
 
 public abstract class AbstractPlaywrightComponentAssert<SELF extends AbstractPlaywrightComponentAssert<SELF, ACTUAl>, ACTUAl extends UiTestComponent>
         extends AbstractPlaywrightAssert<SELF, ACTUAl>
-        implements UiTestComponentAssert<SELF, ACTUAl> {
+        implements UiTestComponentAssert<ACTUAl> {
 
     protected AbstractPlaywrightComponentAssert(ACTUAl actual, Class<?> selfType) {
         super(actual, selfType);

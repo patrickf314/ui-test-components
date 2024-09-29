@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.util.function.Function;
 
 @Slf4j
@@ -18,6 +19,7 @@ import java.util.function.Function;
 @RequiredArgsConstructor
 public class PlaywrightContext implements UiTestContext {
 
+    private final Duration defaultTimeout;
     private final String baseUrl;
     private final String outputDirectory;
     private final String testName;
@@ -37,6 +39,7 @@ public class PlaywrightContext implements UiTestContext {
     @Override
     public <T extends UiTestPage> T openNewPage(Function<UiTestPageContext, T> pageConstructor, String path) {
         var page = browserContext.newPage();
+        page.setDefaultTimeout(defaultTimeout.toMillis());
         page.navigate(baseUrl + path);
         var pageContext = new PlaywrightPageContext(baseUrl, page);
         return pageContext.waitForPage(pageConstructor);

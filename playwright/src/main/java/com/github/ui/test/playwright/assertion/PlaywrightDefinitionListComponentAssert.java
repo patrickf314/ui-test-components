@@ -10,7 +10,7 @@ import static com.github.ui.test.playwright.predicate.PlaywrightComponentPredica
 
 public class PlaywrightDefinitionListComponentAssert<T extends UiTestComponent, D extends UiTestComponent>
         extends AbstractPlaywrightComponentAssert<PlaywrightDefinitionListComponentAssert<T, D>, DefinitionListComponent<T, D>>
-        implements HtmlDefinitionListComponentAssert<PlaywrightDefinitionListComponentAssert<T, D>, T, D> {
+        implements HtmlDefinitionListComponentAssert<T, D> {
 
     public PlaywrightDefinitionListComponentAssert(DefinitionListComponent<T, D> actual) {
         super(actual, PlaywrightDefinitionListComponentAssert.class);

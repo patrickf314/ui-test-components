@@ -7,9 +7,9 @@ import java.util.function.Function;
 
 import static com.github.ui.test.core.selector.Selector.byCSSSelector;
 
-public class TableRowComponent extends UiTestComponent {
+public class HtmlTableRowComponent extends UiTestComponent {
 
-    public TableRowComponent(UiTestComponentContext context) {
+    public HtmlTableRowComponent(UiTestComponentContext context) {
         super(context);
     }
 

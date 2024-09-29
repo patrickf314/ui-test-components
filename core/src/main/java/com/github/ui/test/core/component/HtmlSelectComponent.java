@@ -14,6 +14,8 @@ public abstract class HtmlSelectComponent extends UiTestComponent {
 
     public abstract void select(String value);
 
+    public abstract void select(String group, String label);
+
     public abstract void selectFirstMatching(Pattern pattern);
 
     public UiTestComponentList<UiTestComponent> getOptions() {

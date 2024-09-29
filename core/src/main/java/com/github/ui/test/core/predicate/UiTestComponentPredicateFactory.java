@@ -4,7 +4,6 @@ import com.github.ui.test.core.selector.Selector;
 
 import java.util.List;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 /**
  * A factory for creating {@link UiTestComponentPredicate}s.
@@ -49,40 +48,10 @@ public interface UiTestComponentPredicateFactory {
     /**
      * Combines multiple predicate to one using a logical and.
      *
-     * @param predicate a first predicate
-     * @param other     other predicates
-     * @return the combined predicates
-     */
-    default UiTestComponentPredicate allOf(UiTestComponentPredicate predicate, UiTestComponentPredicate... other) {
-        if (other.length == 0) {
-            return predicate;
-        }
-
-        return allOf(asList(predicate, other));
-    }
-
-    /**
-     * Combines multiple predicate to one using a logical and.
-     *
      * @param predicates a list of predicate to combine
      * @return the combined predicates
      */
     UiTestComponentPredicate allOf(List<UiTestComponentPredicate> predicates);
-
-    /**
-     * Combines multiple predicate to one using a logical or.
-     *
-     * @param predicate a first predicate
-     * @param other     other predicates
-     * @return the combined predicates
-     */
-    default UiTestComponentPredicate anyOf(UiTestComponentPredicate predicate, UiTestComponentPredicate... other) {
-        if (other.length == 0) {
-            return predicate;
-        }
-
-        return anyOf(asList(predicate, other));
-    }
 
     /**
      * Combines multiple predicate to one using a logical or.
@@ -95,17 +64,6 @@ public interface UiTestComponentPredicateFactory {
     /**
      * Combines multiple predicate to one requiring that the element does not match any of the given predicate
      *
-     * @param predicate a first predicate
-     * @param other     other predicates
-     * @return the combined predicates
-     */
-    default UiTestComponentPredicate noneOf(UiTestComponentPredicate predicate, UiTestComponentPredicate... other) {
-        return anyOf(predicate, other).negate();
-    }
-
-    /**
-     * Combines multiple predicate to one requiring that the element does not match any of the given predicate
-     *
      * @param predicates a list of predicates
      * @return the combined predicates
      */
@@ -113,10 +71,5 @@ public interface UiTestComponentPredicateFactory {
         return anyOf(predicates).negate();
     }
 
-    private static List<UiTestComponentPredicate> asList(UiTestComponentPredicate predicate, UiTestComponentPredicate... other) {
-        return Stream.concat(
-                Stream.of(predicate),
-                Stream.of(other)
-        ).toList();
-    }
+    UiTestComponentPredicate descriptionListEntry(UiTestComponentPredicate titlePredicate, UiTestComponentPredicate descriptionPredicate);
 }

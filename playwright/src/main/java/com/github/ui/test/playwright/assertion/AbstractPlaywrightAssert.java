@@ -1,15 +1,14 @@
 package com.github.ui.test.playwright.assertion;
 
+import com.github.ui.test.playwright.context.PlaywrightComponentContext;
 import com.github.ui.test.playwright.predicate.PlaywrightComponentPredicate;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.assertions.LocatorAssertions;
 import com.microsoft.playwright.assertions.PlaywrightAssertions;
-import com.github.ui.test.playwright.context.PlaywrightComponentContext;
 import org.assertj.core.api.AbstractAssert;
 
-public abstract class AbstractPlaywrightAssert<SELF extends AbstractPlaywrightAssert<SELF, ACTUAl>, ACTUAl>
-        extends AbstractAssert<SELF, ACTUAl> {
+public abstract class AbstractPlaywrightAssert<SELF extends AbstractAssert<SELF, ACTUAl>, ACTUAl> extends AbstractAssert<SELF, ACTUAl> {
 
     protected AbstractPlaywrightAssert(ACTUAl actual, Class<?> selfType) {
         super(actual, selfType);

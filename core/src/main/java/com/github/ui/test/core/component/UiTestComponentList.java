@@ -19,5 +19,9 @@ public interface UiTestComponentList<T extends UiTestComponent> {
         return filter(predicate).get(0);
     }
 
+    default T singleton(UiTestComponentPredicate predicate) {
+        return filter(predicate).singleton();
+    }
+
     T singleton();
 }
