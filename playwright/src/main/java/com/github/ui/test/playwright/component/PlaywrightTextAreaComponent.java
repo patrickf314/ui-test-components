@@ -3,6 +3,8 @@ package com.github.ui.test.playwright.component;
 import com.github.ui.test.core.component.HtmlTextAreaComponent;
 import com.github.ui.test.core.context.UiTestComponentContext;
 
+import static com.github.ui.test.playwright.component.PlaywrightComponentFactory.requirePlaywrightContext;
+
 public class PlaywrightTextAreaComponent extends HtmlTextAreaComponent {
 
     public PlaywrightTextAreaComponent(UiTestComponentContext context) {
@@ -11,6 +13,9 @@ public class PlaywrightTextAreaComponent extends HtmlTextAreaComponent {
 
     @Override
     public void setValue(String value) {
-        PlaywrightComponentFactory.requirePlaywrightContext(getContext()).getLocator().fill(value);
+        var context = requirePlaywrightContext(getContext());
+
+        context.evaluateScript("/js/waitInputEditable.js");
+        context.getLocator().fill(value);
     }
 }

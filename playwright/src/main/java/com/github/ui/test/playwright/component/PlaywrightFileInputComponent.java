@@ -26,6 +26,7 @@ public class PlaywrightFileInputComponent extends HtmlFileInputComponent {
     public void selectFiles(List<Path> files) {
         var context = requirePlaywrightContext(getContext());
 
+        context.evaluateScript("/js/waitInputEditable.js");
         context.getLocator().setInputFiles(files.toArray(Path[]::new));
         context.evaluateScript("/js/waitUntilLoadingFinished.js");
     }

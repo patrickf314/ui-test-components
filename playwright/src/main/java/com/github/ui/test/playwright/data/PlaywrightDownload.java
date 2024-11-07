@@ -18,8 +18,8 @@ public class PlaywrightDownload implements UiTestDownload {
     }
 
     @Override
-    public void saveIn(String directory) {
-        saveIn(directory, download.suggestedFilename());
+    public String getSuggestedFileName() {
+        return download.suggestedFilename();
     }
 
     @Override

@@ -15,6 +15,7 @@ public class PlaywrightButtonComponent extends UiTestComponent {
     @Override
     public void click() {
         var context = requirePlaywrightContext(getContext());
+        context.evaluateScript("/js/waitInputEditable.js");
         context.evaluateScript("/js/waitUntilButtonIsEnabled.js");
 
         super.click();

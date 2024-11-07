@@ -6,7 +6,12 @@ public interface UiTestDownload {
 
     InputStream openInputStream();
 
-    void saveIn(String directory);
+    String getSuggestedFileName();
+
+    default void saveIn(String directory) {
+        saveIn(directory, getSuggestedFileName());
+    }
+
 
     void saveIn(String directory, String fileName);
 
