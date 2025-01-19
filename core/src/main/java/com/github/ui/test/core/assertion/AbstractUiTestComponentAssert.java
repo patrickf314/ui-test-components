@@ -6,10 +6,24 @@ import org.assertj.core.api.AbstractAssert;
 
 import static com.github.ui.test.core.assertion.UiTestAssertions.assertThat;
 
+/**
+ * Abstract implementation of a {@link GenericUiTestComponentAssert} which can be used for custom implementation of
+ * {@link GenericUiTestComponentAssert}s. This class used the default Assert returned by
+ * {@link UiTestAssertions#assertThat(UiTestComponent)} to perform the required assertions of the {@link GenericUiTestComponentAssert}
+ *
+ * @param <SELF>   the type of the assert class
+ * @param <ACTUAL> the type of the {@link UiTestComponent}, which this assert asserts.
+ */
 public class AbstractUiTestComponentAssert<SELF extends AbstractUiTestComponentAssert<SELF, ACTUAL>, ACTUAL extends UiTestComponent>
         extends AbstractAssert<SELF, ACTUAL>
-        implements UiTestComponentAssert<ACTUAL> {
+        implements GenericUiTestComponentAssert<SELF, ACTUAL> {
 
+    /**
+     * Constructor
+     *
+     * @param actual the actual component
+     * @param selfType the type of the assert implementation
+     */
     protected AbstractUiTestComponentAssert(ACTUAL actual, Class<?> selfType) {
         super(actual, selfType);
     }
@@ -45,8 +59,20 @@ public class AbstractUiTestComponentAssert<SELF extends AbstractUiTestComponentA
     }
 
     @Override
+    public SELF hasClass(String className) {
+        assertThat(actual).hasClass(className);
+        return null;
+    }
+
+    @Override
     public SELF satisfies(UiTestComponentPredicate predicate) {
         assertThat(actual).satisfies(predicate);
+        return myself;
+    }
+
+    @Override
+    public SELF doesNotSatisfy(UiTestComponentPredicate predicate) {
+        assertThat(actual).doesNotSatisfy(predicate);
         return myself;
     }
 }

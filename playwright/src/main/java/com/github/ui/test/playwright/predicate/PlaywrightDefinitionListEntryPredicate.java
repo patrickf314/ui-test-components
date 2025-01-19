@@ -43,7 +43,7 @@ public class PlaywrightDefinitionListEntryPredicate implements PlaywrightCompone
             entries.add("entry(" + titlePredicate.describeActual(actualTitles.nth(i)) + ", " + descriptionPredicate.describeActual(actualDescriptions.nth(i)) + ")");
         }
 
-        return "[" + String.join(", ", entries) + ")";
+        return "[" + String.join(", ", entries) + "]";
 
     }
 

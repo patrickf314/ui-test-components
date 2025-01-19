@@ -36,6 +36,27 @@ class PlaywrightComponentHasTextPredicateTest {
 
     @ParameterizedTest
     @ValueSource(booleans = {true, false})
+    void testNonMatch(boolean not) {
+        var text = RANDOM.nextObject(String.class);
+        var predicate = new PlaywrightComponentHasTextPredicate(not, text);
+
+        // language=HTML
+        try (var context = mockPage("""
+                <html lang="en">
+                <body>
+                <h1>Test</h1>
+                <span>%s</span>
+                </body>
+                </html>
+                """.formatted(text))) {
+
+            var filteredLocator = predicate.filter(context.page(), context.page().locator("h1"));
+            assertThat(filteredLocator).hasCount(not ? 1 : 0);
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
     void testFilter(boolean not) {
         var text = RANDOM.nextObject(String.class);
         var predicate = new PlaywrightComponentHasTextPredicate(not, text);

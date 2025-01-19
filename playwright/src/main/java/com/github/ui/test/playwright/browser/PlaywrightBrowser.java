@@ -2,6 +2,7 @@ package com.github.ui.test.playwright.browser;
 
 import com.github.ui.test.core.browser.UiTestBrowser;
 import com.github.ui.test.core.context.UiTestContext;
+import com.github.ui.test.playwright.PlaywrightUiTestEnvironment;
 import com.github.ui.test.playwright.context.PlaywrightContext;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.Tracing;
@@ -20,13 +21,15 @@ public class PlaywrightBrowser implements UiTestBrowser {
     @Override
     public UiTestContext createNewTestContext(String baseUrl, String outputDirectory, String testName) {
         var browserContext = browser.newContext();
-        browserContext.tracing().start(
-                new Tracing.StartOptions()
-                        .setScreenshots(true)
-                        .setSnapshots(true)
-                        .setSources(true)
-        );
 
+        if (!PlaywrightUiTestEnvironment.getEnvironment().getOptions().isTracesDisabled()) {
+            browserContext.tracing().start(
+                    new Tracing.StartOptions()
+                            .setScreenshots(true)
+                            .setSnapshots(true)
+                            .setSources(true)
+            );
+        }
 
         log.info("Created test context for {}", testName);
         return new PlaywrightContext(defaultTimeout, baseUrl, outputDirectory, testName, browserContext);

@@ -10,13 +10,22 @@ import com.github.ui.test.core.selector.Selector;
 import com.github.ui.test.playwright.component.PlaywrightListComponent;
 import com.github.ui.test.playwright.data.PlaywrightDownload;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.PlaywrightException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 
 import static com.github.ui.test.playwright.selector.PlaywrightSelectorFactory.requirePlaywrightSelector;
 
+@Slf4j
 @Getter
 @RequiredArgsConstructor
 public class PlaywrightPageContext implements UiTestPageContext {
@@ -30,8 +39,8 @@ public class PlaywrightPageContext implements UiTestPageContext {
     }
 
     @Override
-    public String getUrl() {
-        return page.url();
+    public Url getUrl() {
+        return parseLocation(page.url()).orElseThrow(() -> new IllegalStateException("Failed to parse current url"));
     }
 
     @Override
@@ -50,7 +59,15 @@ public class PlaywrightPageContext implements UiTestPageContext {
     @Override
     public <T extends UiTestPage> T waitForPage(Function<UiTestPageContext, T> constructor) {
         var testPage = constructor.apply(this);
-        page.waitForURL(baseUrl + testPage.getPathPattern());
+
+        try {
+            page.waitForURL(url -> parseLocation(url)
+                    .filter(testPage::matchesUrl)
+                    .isPresent());
+        } catch (PlaywrightException e) {
+            throw new IllegalStateException("Failed to wait for page, url was " + page.url() + " which did not match the path of " + testPage.getClass().getName() + ".", e);
+        }
+
         return testPage;
     }
 
@@ -64,5 +81,48 @@ public class PlaywrightPageContext implements UiTestPageContext {
     public <T extends UiTestPage> T reload(Function<UiTestPageContext, T> constructor) {
         page.reload();
         return waitForPage(constructor);
+    }
+
+    private Optional<Url> parseLocation(String url) {
+        if (url.length() < baseUrl.length()) {
+            return Optional.empty();
+        }
+
+        var baseUrl = url.substring(0, this.baseUrl.length());
+        if (!baseUrl.equalsIgnoreCase(this.baseUrl)) {
+            return Optional.empty();
+        }
+
+        var path = url.substring(this.baseUrl.length());
+
+        var i = path.indexOf('?');
+        var queryParameters = Collections.<String, String>emptyMap();
+        if (i != -1) {
+            queryParameters = parseQueryParameters(path.substring(i + 1));
+            path = path.substring(0, i);
+        }
+
+        var j = path.indexOf('#');
+        String anchor = null;
+        if (j != -1) {
+            anchor = anchor.substring(j + 1);
+            path = path.substring(0, j);
+        }
+
+        return Optional.of(new Url(
+                baseUrl, path, queryParameters, anchor
+        ));
+    }
+
+    private static Map<String, String> parseQueryParameters(String query) {
+        var parameters = new HashMap<String, String>();
+        var entries = query.split("&");
+        for (var entry : entries) {
+            var i = entry.indexOf("=");
+            var name = URLDecoder.decode(i == -1 ? entry : entry.substring(0, i), StandardCharsets.UTF_8);
+            var value = i == -1 ? "true" : URLDecoder.decode(entry.substring(i + 1), StandardCharsets.UTF_8);
+            parameters.put(name, value);
+        }
+        return parameters;
     }
 }

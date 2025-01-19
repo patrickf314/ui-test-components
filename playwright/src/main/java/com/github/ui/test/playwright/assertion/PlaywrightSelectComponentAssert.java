@@ -2,19 +2,35 @@ package com.github.ui.test.playwright.assertion;
 
 import com.github.ui.test.core.assertion.HtmlSelectComponentAssert;
 import com.github.ui.test.core.component.HtmlSelectComponent;
+import com.github.ui.test.core.component.UiTestComponent;
+import com.github.ui.test.core.predicate.UiTestComponentPredicate;
+import org.opentest4j.AssertionFailedError;
 
-public class PlaywrightSelectComponentAssert<T extends HtmlSelectComponent>
-        extends AbstractPlaywrightComponentAssert<PlaywrightSelectComponentAssert<T>, T>
-        implements HtmlSelectComponentAssert<T> {
+public class PlaywrightSelectComponentAssert
+        extends AbstractPlaywrightComponentAssert<PlaywrightSelectComponentAssert, HtmlSelectComponent>
+        implements HtmlSelectComponentAssert {
 
-    public PlaywrightSelectComponentAssert(T actual) {
+    public PlaywrightSelectComponentAssert(HtmlSelectComponent actual) {
         super(actual, PlaywrightSelectComponentAssert.class);
     }
 
-    public PlaywrightSelectComponentAssert<T> hasOptions(String... options) {
-        var optionsLocator = getActualLocator().locator("option");
-        locatorAssertions(optionsLocator).hasCount(options.length);
-        locatorAssertions(optionsLocator).containsText(options);
+    public PlaywrightSelectComponentAssert containsOptions(String... options) {
+        optionsAssert().containsExactlyElementsWithText(options);
         return this;
+    }
+
+    @Override
+    public HtmlSelectComponentAssert containsOption(UiTestComponentPredicate predicate) {
+        try {
+            optionsAssert().contains(predicate);
+        } catch (AssertionFailedError e) {
+            throw withDescribedPredicate(e, predicate);
+        }
+        return this;
+    }
+
+
+    private PlaywrightListComponentAssert<UiTestComponent> optionsAssert() {
+        return new PlaywrightListComponentAssert<>(actual.getOptions());
     }
 }

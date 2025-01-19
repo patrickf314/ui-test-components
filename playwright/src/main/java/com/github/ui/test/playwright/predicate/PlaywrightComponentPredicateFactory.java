@@ -32,12 +32,26 @@ public class PlaywrightComponentPredicateFactory implements UiTestComponentPredi
     }
 
     @Override
+    public PlaywrightComponentPredicate hasAttribute(String attribute) {
+        return hasAttribute(attribute, null);
+    }
+
+    @Override
+    public PlaywrightComponentPredicate hasAttribute(String attribute, String value) {
+        return new PlaywrightComponentHasAttributePredicate(false, attribute, value);
+    }
+
+    @Override
     public PlaywrightComponentPredicate allOf(List<UiTestComponentPredicate> predicates) {
         return new PlaywrightComponentAllOfPredicate(predicates.stream().map(PlaywrightComponentPredicateFactory::requirePlaywrightPredicate).toList());
     }
 
     @Override
     public PlaywrightComponentPredicate anyOf(List<UiTestComponentPredicate> predicates) {
+        if(predicates.isEmpty()) {
+            throw new IllegalArgumentException("At least one predicate must be provided");
+        }
+
         return new PlaywrightComponentAnyOfPredicate(predicates.stream().map(PlaywrightComponentPredicateFactory::requirePlaywrightPredicate).toList());
     }
 

@@ -15,7 +15,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <lombok.version>1.18.34</lombok.version>
-        <playwright.version>1.46.0</playwright.version>
+        <mapstruct.version>1.6.3</mapstruct.version>
+        <playwright.version>1.49.0</playwright.version>
         <junit.version>5.11.0</junit.version>
         <easyrandom.version>5.0.0</easyrandom.version>
         <logback.version>1.5.8</logback.version>
@@ -55,6 +56,11 @@
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
                             <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct.version}</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>

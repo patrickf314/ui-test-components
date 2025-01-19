@@ -13,6 +13,9 @@ import lombok.With;
 
 import java.time.Duration;
 
+/**
+ * An implementation of a {@link UiTestEnvironment} for Playwright.
+ */
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class PlaywrightUiTestEnvironment extends UiTestEnvironment {
@@ -56,9 +59,10 @@ public class PlaywrightUiTestEnvironment extends UiTestEnvironment {
     public static class Options {
         private final Duration timeout;
         private final String testIdAttribute;
+        private final boolean tracesDisabled;
 
         public Options() {
-            this(Duration.ofSeconds(5), DEFAULT_TEST_ID_ATTRIBUTE);
+            this(Duration.ofSeconds(5), DEFAULT_TEST_ID_ATTRIBUTE, false);
         }
     }
 }

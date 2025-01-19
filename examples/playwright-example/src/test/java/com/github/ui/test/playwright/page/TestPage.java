@@ -5,13 +5,20 @@ import com.github.ui.test.core.component.UiTestComponent;
 import com.github.ui.test.core.component.UiTestPage;
 import com.github.ui.test.core.context.UiTestPageContext;
 
+import java.util.Map;
+
 import static com.github.ui.test.core.component.UiTestComponent.inputComponent;
 import static com.github.ui.test.core.selector.Selector.byCSSSelector;
 
 public class TestPage extends UiTestPage {
 
     public TestPage(UiTestPageContext context) {
-        super(context, "/test.html");
+        super(context);
+    }
+
+    @Override
+    public boolean matchesUrl(UiTestPageContext.Url url) {
+        return "/test.html".equals(url.path());
     }
 
     public HtmlInputComponent getInputField() {

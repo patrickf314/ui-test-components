@@ -1,4 +1,4 @@
-// Waits until an input element is editable
+// Waits until an element is not overlapped by another element
 // noinspection BadExpressionStatementJS
 /**
  * Waits for the given node to not be overlapped by another element
@@ -13,7 +13,7 @@
     function checkEditable() {
         counter--;
         if (counter === 0) {
-            reject(new Error(`Element is still not editable after ${timeout} seconds.`));
+            reject(new Error(`Element is still overlapped after ${timeout} seconds.`));
             return;
         }
 

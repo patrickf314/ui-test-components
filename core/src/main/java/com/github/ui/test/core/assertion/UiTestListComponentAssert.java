@@ -5,6 +5,9 @@ import com.github.ui.test.core.predicate.UiTestComponentPredicate;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
+
+import static com.github.ui.test.core.predicate.UiTestComponentPredicate.anyOf;
 
 public interface UiTestListComponentAssert<T extends UiTestComponent> {
 
@@ -41,7 +44,19 @@ public interface UiTestListComponentAssert<T extends UiTestComponent> {
 
     UiTestListComponentAssert<T> containsExactly(List<UiTestComponentPredicate> itemPredicates);
 
-    default UiTestListComponentAssert<T> doesNotContain(UiTestComponentPredicate predicate) {
-        return containsOnly(predicate.negate());
+    default UiTestListComponentAssert<T> doesNotContainElementWithText(String text) {
+        return doesNotContain(UiTestComponentPredicate.hasText(text));
     }
+
+    default UiTestListComponentAssert<T> doesNotContain(List<UiTestComponentPredicate> predicates) {
+        return doesNotContain(anyOf(predicates));
+    }
+
+    default UiTestListComponentAssert<T> doesNotContain(UiTestComponentPredicate predicate, UiTestComponentPredicate... otherPredicates) {
+        return containsOnly(anyOf(predicate, otherPredicates).negate());
+    }
+
+    UiTestComponentAssert<T> first();
+
+    <S extends UiTestComponent> UiTestListComponentAssert<S> extracting(Function<T, S> mapper);
 }

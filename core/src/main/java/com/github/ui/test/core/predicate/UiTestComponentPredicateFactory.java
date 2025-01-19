@@ -46,6 +46,37 @@ public interface UiTestComponentPredicateFactory {
     UiTestComponentPredicate hasChild(String label, Selector childSelector, UiTestComponentPredicate childPredicate);
 
     /**
+     * Matches elements which have the given attribute.
+     * The predicate matches only if the attribute is present and not the actual value
+     * of the attribute
+     *
+     * @param attribute the attribute name
+     * @return the predicate
+     * @see #hasAttribute(String, String)
+     */
+    UiTestComponentPredicate hasAttribute(String attribute);
+
+    /**
+     * Matches elements which have the given attribute with the specific value.
+     *
+     * @param attribute the attribute name
+     * @return the predicate
+     * @see #hasAttribute(String, String)
+     */
+    UiTestComponentPredicate hasAttribute(String attribute, String value);
+
+    /**
+     * Matches an {@link com.github.ui.test.core.component.HtmlDefinitionListComponent.Entry} in an HTML definition list
+     * (in {@code <dl>...</dl>} with a title ({@code <dt>})
+     * matching the titlePredicate and a description ({@code <dd>}) matching the descriptionPredicate.
+     *
+     * @param titlePredicate       the title predicate
+     * @param descriptionPredicate the description predicate
+     * @return the entry predicate matching the combination of title and description predicate
+     */
+    UiTestComponentPredicate descriptionListEntry(UiTestComponentPredicate titlePredicate, UiTestComponentPredicate descriptionPredicate);
+
+    /**
      * Combines multiple predicate to one using a logical and.
      *
      * @param predicates a list of predicate to combine
@@ -70,6 +101,4 @@ public interface UiTestComponentPredicateFactory {
     default UiTestComponentPredicate noneOf(List<UiTestComponentPredicate> predicates) {
         return anyOf(predicates).negate();
     }
-
-    UiTestComponentPredicate descriptionListEntry(UiTestComponentPredicate titlePredicate, UiTestComponentPredicate descriptionPredicate);
 }

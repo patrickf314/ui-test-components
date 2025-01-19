@@ -1,6 +1,6 @@
 package com.github.ui.test.playwright.component;
 
-import com.github.ui.test.core.component.DefinitionListComponent;
+import com.github.ui.test.core.component.HtmlDefinitionListComponent;
 import com.github.ui.test.core.component.UiTestComponent;
 import com.github.ui.test.core.component.UiTestComponentList;
 import com.github.ui.test.core.context.UiTestComponentContext;
@@ -9,7 +9,7 @@ import java.util.function.Function;
 
 import static com.github.ui.test.core.selector.Selector.byCSSSelector;
 
-public class PlaywrightDefinitionListComponent<T extends UiTestComponent, D extends UiTestComponent> extends DefinitionListComponent<T, D> {
+public class PlaywrightDefinitionListComponent<T extends UiTestComponent, D extends UiTestComponent> extends HtmlDefinitionListComponent<T, D> {
 
     private final Function<UiTestComponentContext, T> titleConstructor;
     private final Function<UiTestComponentContext, D> descriptionConstructor;

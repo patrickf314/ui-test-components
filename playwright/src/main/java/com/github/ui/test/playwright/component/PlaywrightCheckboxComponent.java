@@ -15,7 +15,7 @@ public class PlaywrightCheckboxComponent extends HtmlCheckboxComponent {
     public void check() {
         var context = requirePlaywrightContext(getContext());
 
-        context.evaluateScript("/js/waitInputEditable.js");
+        context.evaluateScript("/js/waitUntilElementIsNotOverlapped.js");
         context.getLocator().check();
     }
 
@@ -23,7 +23,7 @@ public class PlaywrightCheckboxComponent extends HtmlCheckboxComponent {
     public void uncheck() {
         var context = requirePlaywrightContext(getContext());
 
-        context.evaluateScript("/js/waitInputEditable.js");
+        context.evaluateScript("/js/waitUntilElementIsNotOverlapped.js");
         context.getLocator().uncheck();
     }
 }

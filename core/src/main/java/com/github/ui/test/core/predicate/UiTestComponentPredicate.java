@@ -58,6 +58,68 @@ public interface UiTestComponentPredicate {
     }
 
     /**
+     * Matches elements which have the given attribute.
+     * The predicate matches only if the attribute is present and not the actual value
+     * of the attribute
+     *
+     * @param attribute the attribute name
+     * @return the predicate
+     * @see #hasAttribute(String, String)
+     */
+    static UiTestComponentPredicate hasAttribute(String attribute) {
+        return getEnvironment().getPredicateFactory().hasAttribute(attribute);
+
+    }
+
+    /**
+     * Matches elements which have the given attribute with the specific value.
+     *
+     * @param attribute the attribute name
+     * @return the predicate
+     * @see #hasAttribute(String, String)
+     */
+    static UiTestComponentPredicate hasAttribute(String attribute, String value) {
+        return getEnvironment().getPredicateFactory().hasAttribute(attribute, value);
+    }
+
+    /**
+     * Matches an {@link com.github.ui.test.core.component.HtmlDefinitionListComponent.Entry} in an HTML definition list
+     * (in {@code <dl>...</dl>} with a title ({@code <dt>})
+     * equals the given title and a description ({@code <dd>}) matching the descriptionPredicate.
+     *
+     * @param title                the title
+     * @param descriptionPredicate the description predicate
+     * @return the entry predicate matching the combination of title and description predicate
+     */
+    static UiTestComponentPredicate descriptionListEntry(String title, UiTestComponentPredicate descriptionPredicate) {
+        return descriptionListEntry(hasText(title), descriptionPredicate);
+    }
+
+    /**
+     * Matches an {@link com.github.ui.test.core.component.HtmlDefinitionListComponent.Entry} in an HTML definition list
+     * (in {@code <dl>...</dl>} with a title ({@code <dt>})
+     * matching the titlePredicate and a description ({@code <dd>}) matching the descriptionPredicate.
+     *
+     * @param titlePredicate       the title predicate
+     * @param descriptionPredicate the description predicate
+     * @return the entry predicate matching the combination of title and description predicate
+     */
+    static UiTestComponentPredicate descriptionListEntry(UiTestComponentPredicate titlePredicate, UiTestComponentPredicate descriptionPredicate) {
+        return getEnvironment().getPredicateFactory().descriptionListEntry(titlePredicate, descriptionPredicate);
+    }
+
+    /**
+     * Negates the given predicate
+     *
+     * @param predicate the predicate
+     * @return the negated predicate
+     * @see UiTestComponentPredicate#negate()
+     */
+    static UiTestComponentPredicate not(UiTestComponentPredicate predicate) {
+        return predicate.negate();
+    }
+
+    /**
      * Combines multiple predicate to one using a logical and.
      *
      * @param predicate a first predicate
@@ -125,15 +187,7 @@ public interface UiTestComponentPredicate {
      * @return the combined predicates
      */
     static UiTestComponentPredicate noneOf(List<UiTestComponentPredicate> predicates) {
-        return noneOf(predicates).negate();
-    }
-
-    static UiTestComponentPredicate descriptionListEntry(String title, UiTestComponentPredicate descriptionPredicate) {
-        return descriptionListEntry(hasText(title), descriptionPredicate);
-    }
-
-    static UiTestComponentPredicate descriptionListEntry(UiTestComponentPredicate titlePredicate, UiTestComponentPredicate descriptionPredicate) {
-        return getEnvironment().getPredicateFactory().descriptionListEntry(titlePredicate, descriptionPredicate);
+        return getEnvironment().getPredicateFactory().noneOf(predicates);
     }
 
     private static List<UiTestComponentPredicate> asList(UiTestComponentPredicate predicate, UiTestComponentPredicate... other) {

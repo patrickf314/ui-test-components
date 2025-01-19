@@ -25,7 +25,7 @@ public class PlaywrightSelectComponent extends HtmlSelectComponent {
         var context = requirePlaywrightContext(getContext());
         var value = (String) context.evaluateScript("/js/findOptionValueInGroup.js", Map.of("group", group, "label", label));
 
-        context.evaluateScript("/js/waitInputEditable.js");
+        context.evaluateScript("/js/waitUntilElementIsNotOverlapped.js");
         context.getLocator().selectOption(value);
     }
 

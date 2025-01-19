@@ -1,7 +1,7 @@
 package com.github.ui.test.playwright.assertion;
 
 import com.github.ui.test.core.assertion.HtmlDefinitionListComponentAssert;
-import com.github.ui.test.core.component.DefinitionListComponent;
+import com.github.ui.test.core.component.HtmlDefinitionListComponent;
 import com.github.ui.test.core.component.UiTestComponent;
 import com.github.ui.test.core.predicate.UiTestComponentPredicate;
 import com.github.ui.test.playwright.predicate.PlaywrightDefinitionListEntryPredicate;
@@ -9,10 +9,10 @@ import com.github.ui.test.playwright.predicate.PlaywrightDefinitionListEntryPred
 import static com.github.ui.test.playwright.predicate.PlaywrightComponentPredicateFactory.requirePlaywrightPredicate;
 
 public class PlaywrightDefinitionListComponentAssert<T extends UiTestComponent, D extends UiTestComponent>
-        extends AbstractPlaywrightComponentAssert<PlaywrightDefinitionListComponentAssert<T, D>, DefinitionListComponent<T, D>>
+        extends AbstractPlaywrightComponentAssert<PlaywrightDefinitionListComponentAssert<T, D>, HtmlDefinitionListComponent<T, D>>
         implements HtmlDefinitionListComponentAssert<T, D> {
 
-    public PlaywrightDefinitionListComponentAssert(DefinitionListComponent<T, D> actual) {
+    public PlaywrightDefinitionListComponentAssert(HtmlDefinitionListComponent<T, D> actual) {
         super(actual, PlaywrightDefinitionListComponentAssert.class);
     }
 

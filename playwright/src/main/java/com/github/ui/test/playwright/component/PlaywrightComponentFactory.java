@@ -2,8 +2,8 @@ package com.github.ui.test.playwright.component;
 
 import com.github.ui.test.core.component.*;
 import com.github.ui.test.core.context.UiTestComponentContext;
-import com.github.ui.test.playwright.context.PlaywrightComponentContext;
 import com.github.ui.test.core.exception.IllegalContextException;
+import com.github.ui.test.playwright.context.PlaywrightComponentContext;
 
 import java.util.function.Function;
 
@@ -25,7 +25,7 @@ public class PlaywrightComponentFactory implements UiTestComponentFactory {
     }
 
     @Override
-    public UiTestComponent buttonComponent(UiTestComponentContext context) {
+    public HtmlButtonComponent buttonComponent(UiTestComponentContext context) {
         return new PlaywrightButtonComponent(context);
     }
 
@@ -40,7 +40,7 @@ public class PlaywrightComponentFactory implements UiTestComponentFactory {
     }
 
     @Override
-    public <T extends UiTestComponent, D extends UiTestComponent> DefinitionListComponent<T, D> definitionListComponent(UiTestComponentContext context, Function<UiTestComponentContext, T> titleConstructor, Function<UiTestComponentContext, D> descriptionConstructor) {
+    public <T extends UiTestComponent, D extends UiTestComponent> HtmlDefinitionListComponent<T, D> definitionListComponent(UiTestComponentContext context, Function<UiTestComponentContext, T> titleConstructor, Function<UiTestComponentContext, D> descriptionConstructor) {
         return new PlaywrightDefinitionListComponent<>(context, titleConstructor, descriptionConstructor);
     }
 

@@ -8,10 +8,14 @@ public interface UiTestAssertFactory {
 
     <T extends UiTestComponent> UiTestListComponentAssert<T> listComponentAssert(UiTestComponentList<T> actual);
 
-    <T extends HtmlInputComponent> HtmlInputComponentAssert<T> htmlInputComponentAssert(T actual);
+    HtmlButtonComponentAssert htmlButtonComponentAssert(HtmlButtonComponent actual);
 
-    <T extends HtmlSelectComponent> HtmlSelectComponentAssert<T> htmlSelectComponentAssert(T actual);
+    HtmlCheckboxComponentAssert htmlCheckboxComponentAssert(HtmlCheckboxComponent actual);
 
-    <T extends UiTestComponent, D extends UiTestComponent> HtmlDefinitionListComponentAssert<T, D> htmlDefinitionListComponentAssert(DefinitionListComponent<T, D> actual);
+    <T extends UiTestComponent, D extends UiTestComponent> HtmlDefinitionListComponentAssert<T, D> htmlDefinitionListComponentAssert(HtmlDefinitionListComponent<T, D> actual);
+
+    HtmlInputComponentAssert htmlInputComponentAssert(HtmlInputComponent actual);
+
+    HtmlSelectComponentAssert htmlSelectComponentAssert(HtmlSelectComponent actual);
 
 }

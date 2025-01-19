@@ -26,12 +26,12 @@ class PlaywrightComponentContainsTextPredicateTest {
         try (var context = mockPage("""
                 <html lang="en">
                 <body>
-                <h1>a text containing %s</h1>
+                <span>This is a text containing %s.</span>
                 </body>
                 </html>
                 """.formatted(text))) {
 
-            var filteredLocator = predicate.filter(context.page(), context.page().locator("h1"));
+            var filteredLocator = predicate.filter(context.page(), context.page().locator("span"));
             assertThat(filteredLocator).hasCount(not ? 0 : 1);
         }
     }

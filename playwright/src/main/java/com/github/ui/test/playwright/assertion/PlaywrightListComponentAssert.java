@@ -1,14 +1,17 @@
 package com.github.ui.test.playwright.assertion;
 
+import com.github.ui.test.core.assertion.UiTestComponentAssert;
 import com.github.ui.test.core.assertion.UiTestListComponentAssert;
 import com.github.ui.test.core.component.UiTestComponent;
 import com.github.ui.test.core.component.UiTestComponentList;
 import com.github.ui.test.core.predicate.UiTestComponentPredicate;
 import com.github.ui.test.playwright.context.PlaywrightComponentContext;
+import com.microsoft.playwright.assertions.LocatorAssertions;
 import lombok.extern.slf4j.Slf4j;
 import org.opentest4j.AssertionFailedError;
 
 import java.util.List;
+import java.util.function.Function;
 
 import static com.github.ui.test.core.assertion.UiTestAssertions.assertThat;
 import static com.github.ui.test.playwright.component.PlaywrightComponentFactory.requirePlaywrightContext;
@@ -64,6 +67,17 @@ public class PlaywrightListComponentAssert<T extends UiTestComponent>
             assertThat(actual.get(i)).satisfies(itemPredicates.get(i));
         }
         return this;
+    }
+
+    @Override
+    public UiTestComponentAssert<T> first() {
+        return assertThat(actual.get(0));
+    }
+
+    @Override
+    public <S extends UiTestComponent> UiTestListComponentAssert<S> extracting(Function<T, S> mapper) {
+        isNotNull();
+        return new PlaywrightListComponentAssert<>(actual.map(mapper));
     }
 
     private PlaywrightListComponentAssert<T> filteredListAssert(UiTestComponentPredicate predicate) {

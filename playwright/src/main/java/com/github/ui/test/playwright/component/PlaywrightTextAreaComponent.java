@@ -15,7 +15,7 @@ public class PlaywrightTextAreaComponent extends HtmlTextAreaComponent {
     public void setValue(String value) {
         var context = requirePlaywrightContext(getContext());
 
-        context.evaluateScript("/js/waitInputEditable.js");
+        context.evaluateScript("/js/waitUntilElementIsNotOverlapped.js");
         context.getLocator().fill(value);
     }
 }

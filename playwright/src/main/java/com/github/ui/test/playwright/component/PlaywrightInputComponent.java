@@ -15,7 +15,7 @@ public class PlaywrightInputComponent extends HtmlInputComponent {
     public void setValue(String value) {
         var context = requirePlaywrightContext(getContext());
 
-        context.evaluateScript("/js/waitInputEditable.js");
+        context.evaluateScript("/js/waitUntilElementIsNotOverlapped.js");
         context.getLocator().fill(value);
         context.evaluateScript("/js/waitUntilLoadingFinished.js");
     }

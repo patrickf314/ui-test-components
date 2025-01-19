@@ -20,6 +20,12 @@ public abstract class AbstractPlaywrightComponentTextPredicate implements Playwr
 
     protected final boolean not;
 
+    /**
+     * Describes the given text.
+     *
+     * @param text the text to describe
+     * @return the text description
+     */
     protected static String describeText(String text) {
         return "text('" + text.replace("\n", "\\n") + "')";
     }

@@ -1,8 +1,11 @@
 package com.github.ui.test.playwright.assertion;
 
+import com.github.ui.test.core.assertion.HtmlButtonComponentAssert;
+import com.github.ui.test.core.assertion.HtmlCheckboxComponentAssert;
 import com.github.ui.test.core.assertion.HtmlInputComponentAssert;
 import com.github.ui.test.core.assertion.UiTestAssertFactory;
 import com.github.ui.test.core.component.*;
+import com.github.ui.test.playwright.component.PlaywrightCheckboxComponent;
 
 public class PlaywrightAssertFactory implements UiTestAssertFactory {
 
@@ -17,17 +20,27 @@ public class PlaywrightAssertFactory implements UiTestAssertFactory {
     }
 
     @Override
-    public <T extends HtmlInputComponent> HtmlInputComponentAssert<T> htmlInputComponentAssert(T actual) {
-        return new PlaywrightInputComponentAssert<>(actual);
+    public HtmlButtonComponentAssert htmlButtonComponentAssert(HtmlButtonComponent actual) {
+        return new PlaywrightButtonComponentAssert(actual);
     }
 
     @Override
-    public <T extends HtmlSelectComponent> PlaywrightSelectComponentAssert<T> htmlSelectComponentAssert(T actual) {
-        return new PlaywrightSelectComponentAssert<>(actual);
+    public HtmlCheckboxComponentAssert htmlCheckboxComponentAssert(HtmlCheckboxComponent actual) {
+        return new PlaywrightCheckboxComponentAssert(actual);
     }
 
     @Override
-    public <T extends UiTestComponent, D extends UiTestComponent> PlaywrightDefinitionListComponentAssert<T, D> htmlDefinitionListComponentAssert(DefinitionListComponent<T, D> actual) {
+    public <T extends UiTestComponent, D extends UiTestComponent> PlaywrightDefinitionListComponentAssert<T, D> htmlDefinitionListComponentAssert(HtmlDefinitionListComponent<T, D> actual) {
         return new PlaywrightDefinitionListComponentAssert<>(actual);
+    }
+
+    @Override
+    public HtmlInputComponentAssert htmlInputComponentAssert(HtmlInputComponent actual) {
+        return new PlaywrightInputComponentAssert(actual);
+    }
+
+    @Override
+    public PlaywrightSelectComponentAssert htmlSelectComponentAssert(HtmlSelectComponent actual) {
+        return new PlaywrightSelectComponentAssert(actual);
     }
 }

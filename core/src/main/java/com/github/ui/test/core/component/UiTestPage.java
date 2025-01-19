@@ -3,17 +3,14 @@ package com.github.ui.test.core.component;
 import com.github.ui.test.core.context.UiTestPageContext;
 import lombok.Getter;
 
+import java.util.Map;
 import java.util.function.Function;
 
 @Getter
-public class UiTestPage extends UiTestElement<UiTestPageContext> {
+public abstract class UiTestPage extends UiTestElement<UiTestPageContext> {
 
-    private final String pathPattern;
-
-    public UiTestPage(UiTestPageContext context, String pathPattern) {
+    public UiTestPage(UiTestPageContext context) {
         super(context);
-
-        this.pathPattern = pathPattern;
     }
 
     public void close() {
@@ -23,4 +20,6 @@ public class UiTestPage extends UiTestElement<UiTestPageContext> {
     public <T extends UiTestPage> T reload(Function<UiTestPageContext, T> constructor) {
         return getContext().reload(constructor);
     }
+
+    public abstract boolean matchesUrl(UiTestPageContext.Url url);
 }
