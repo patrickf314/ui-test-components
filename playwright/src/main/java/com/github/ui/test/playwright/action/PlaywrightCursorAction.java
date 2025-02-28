@@ -11,7 +11,7 @@ public class PlaywrightCursorAction implements UiTestCursorAction {
 
     private final PlaywrightComponentContext context;
 
-    private boolean hasMoved;
+    private Mouse mouse;
     private double x;
     private double y;
 
@@ -49,11 +49,11 @@ public class PlaywrightCursorAction implements UiTestCursorAction {
     }
 
     private Mouse mouse() {
-        var mouse = context.getPageContext().getPage().mouse();
-        if (!hasMoved) {
+        if (mouse == null) {
+            mouse = context.getPageContext().getPage().mouse();
             mouse.move(x, y);
-            hasMoved = true;
         }
+
         return mouse;
     }
 }
