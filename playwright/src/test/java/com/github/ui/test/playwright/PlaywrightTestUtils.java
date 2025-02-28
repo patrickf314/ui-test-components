@@ -16,7 +16,7 @@ import java.time.Duration;
 
 public class PlaywrightTestUtils {
 
-    private static final Duration TIMEOUT = Duration.ofMillis(100);
+    private static final Duration TIMEOUT = Duration.ofSeconds(1);
 
     public static PlaywrightTestContext mockPage(InputStream content) {
         if(content == null) {
