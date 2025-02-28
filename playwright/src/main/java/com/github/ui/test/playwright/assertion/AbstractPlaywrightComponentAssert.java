@@ -8,7 +8,7 @@ import com.github.ui.test.playwright.predicate.PlaywrightComponentHasTextPredica
 import com.github.ui.test.playwright.predicate.PlaywrightComponentPredicateFactory;
 import com.github.ui.test.playwright.predicate.PlaywrightComponentVisiblePredicate;
 
-import java.util.function.Consumer;
+import static com.github.ui.test.playwright.predicate.PlaywrightComponentHasAttributePredicate.describeAttribute;
 
 public abstract class AbstractPlaywrightComponentAssert<SELF extends AbstractPlaywrightComponentAssert<SELF, ACTUAL>, ACTUAL extends UiTestComponent>
         extends AbstractPlaywrightAssert<SELF, ACTUAL> {
@@ -59,8 +59,8 @@ public abstract class AbstractPlaywrightComponentAssert<SELF extends AbstractPla
         } catch (AssertionError e) {
             var actual = getActualLocator().getAttribute(name);
             throw withActualExpected(e,
-                    "attribute('" + name + "', " + (actual == null ? "<NULL>" : "'" + actual + "'") + ")",
-                    "attribute('" + name + "', '" + value + "')"
+                    describeAttribute(name, actual),
+                    describeAttribute(name, value)
             );
         }
         return myself;
@@ -92,9 +92,9 @@ public abstract class AbstractPlaywrightComponentAssert<SELF extends AbstractPla
     public SELF doesNotSatisfy(UiTestComponentPredicate predicate) {
         var playwrightPredicate = PlaywrightComponentPredicateFactory.requirePlaywrightPredicate(predicate);
         try {
-            locatorAssertions(playwrightPredicate.filter(getActualPage(), getActualLocator())).isEmpty();
+            locatorAssertions(playwrightPredicate.filter(getActualPage(), getActualLocator())).hasCount(0);
         } catch (AssertionError e) {
-            throw withDescribedPredicate(e, playwrightPredicate);
+            throw withDescribedPredicate(e, playwrightPredicate.negate());
         }
         return myself;
     }

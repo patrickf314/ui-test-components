@@ -68,7 +68,6 @@ public interface UiTestComponentPredicate {
      */
     static UiTestComponentPredicate hasAttribute(String attribute) {
         return getEnvironment().getPredicateFactory().hasAttribute(attribute);
-
     }
 
     /**

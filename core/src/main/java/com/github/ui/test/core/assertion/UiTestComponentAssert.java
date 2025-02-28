@@ -2,5 +2,8 @@ package com.github.ui.test.core.assertion;
 
 import com.github.ui.test.core.component.UiTestComponent;
 
-public interface UiTestComponentAssert<ACTUAL extends UiTestComponent> extends GenericUiTestComponentAssert<UiTestComponentAssert<ACTUAL>, ACTUAL> {
+/**
+ * A typed version of {@link GenericUiTestComponentAssert} for {@link UiTestComponent}s.
+ */
+public interface UiTestComponentAssert extends GenericUiTestComponentAssert<UiTestComponentAssert, UiTestComponent> {
 }

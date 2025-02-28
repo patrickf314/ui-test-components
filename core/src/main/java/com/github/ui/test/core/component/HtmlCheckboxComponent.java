@@ -3,7 +3,7 @@ package com.github.ui.test.core.component;
 import com.github.ui.test.core.context.UiTestComponentContext;
 
 /**
- * {@link UiTestComponent} implementation for a HTML checkbox {@code <input type="checkbox">}
+ * {@link UiTestComponent} implementation for an HTML checkbox {@code <input type="checkbox">}
  *
  * @see UiTestComponent#checkboxComponent()
  */

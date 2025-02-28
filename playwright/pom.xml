@@ -29,6 +29,10 @@
             <groupId>com.github.ui.test.component</groupId>
             <artifactId>core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.github.ui.test.component</groupId>
+            <artifactId>common</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.microsoft.playwright</groupId>
@@ -63,6 +67,11 @@
         <dependency>
             <groupId>org.jeasy</groupId>
             <artifactId>easy-random-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

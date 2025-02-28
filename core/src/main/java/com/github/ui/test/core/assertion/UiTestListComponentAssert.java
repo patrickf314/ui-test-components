@@ -56,7 +56,7 @@ public interface UiTestListComponentAssert<T extends UiTestComponent> {
         return containsOnly(anyOf(predicate, otherPredicates).negate());
     }
 
-    UiTestComponentAssert<T> first();
+    UiTestComponentAssert first();
 
     <S extends UiTestComponent> UiTestListComponentAssert<S> extracting(Function<T, S> mapper);
 }

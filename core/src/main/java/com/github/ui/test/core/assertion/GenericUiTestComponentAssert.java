@@ -3,8 +3,6 @@ package com.github.ui.test.core.assertion;
 import com.github.ui.test.core.component.UiTestComponent;
 import com.github.ui.test.core.predicate.UiTestComponentPredicate;
 
-import java.util.function.Consumer;
-
 /**
  * The generic base interface of a {@link UiTestComponent} assert
  *

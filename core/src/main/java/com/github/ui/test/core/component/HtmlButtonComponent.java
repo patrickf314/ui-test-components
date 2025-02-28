@@ -3,7 +3,7 @@ package com.github.ui.test.core.component;
 import com.github.ui.test.core.context.UiTestComponentContext;
 
 /**
- * {@link UiTestComponent} implementation for a HTML button {@code <button>}
+ * {@link UiTestComponent} implementation for an HTML button {@code <button>}
  *
  * @see UiTestComponent#buttonComponent() ()
  */

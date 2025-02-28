@@ -17,10 +17,9 @@ public class UiTestAssertions extends Assertions {
      * Basic assert for a {@link UiTestComponent}
      *
      * @param actual the actual component
-     * @param <T>    the type of the component
      * @return the component assert
      */
-    public static <T extends UiTestComponent> UiTestComponentAssert<T> assertThat(T actual) {
+    public static UiTestComponentAssert assertThat(UiTestComponent actual) {
         return getEnvironment().getAssertFactory().componentAssert(actual);
     }
 

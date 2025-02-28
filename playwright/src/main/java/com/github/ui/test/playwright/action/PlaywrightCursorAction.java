@@ -3,7 +3,6 @@ package com.github.ui.test.playwright.action;
 import com.github.ui.test.core.action.UiTestCursorAction;
 import com.github.ui.test.playwright.context.PlaywrightComponentContext;
 import com.microsoft.playwright.Mouse;
-import com.microsoft.playwright.options.BoundingBox;
 
 /**
  * Playwright implementation of the {@link UiTestCursorAction}
@@ -11,7 +10,10 @@ import com.microsoft.playwright.options.BoundingBox;
 public class PlaywrightCursorAction implements UiTestCursorAction {
 
     private final PlaywrightComponentContext context;
-    private final BoundingBox boundingBox;
+
+    private boolean hasMoved;
+    private double x;
+    private double y;
 
     /**
      * Constructor.
@@ -20,12 +22,17 @@ public class PlaywrightCursorAction implements UiTestCursorAction {
      */
     public PlaywrightCursorAction(PlaywrightComponentContext context) {
         this.context = context;
-        this.boundingBox = context.getLocator().boundingBox();
+
+        var boundingBox = context.getLocator().boundingBox();
+        this.x = boundingBox.x;
+        this.y = boundingBox.y;
     }
 
     @Override
     public UiTestCursorAction move(double dx, double dy) {
-        mouse().move(boundingBox.x + dx, boundingBox.y + dy);
+        x += dx;
+        y += dy;
+        mouse().move(x, y);
         return this;
     }
 
@@ -42,6 +49,11 @@ public class PlaywrightCursorAction implements UiTestCursorAction {
     }
 
     private Mouse mouse() {
-        return context.getPageContext().getPage().mouse();
+        var mouse = context.getPageContext().getPage().mouse();
+        if (!hasMoved) {
+            mouse.move(x, y);
+            hasMoved = true;
+        }
+        return mouse;
     }
 }

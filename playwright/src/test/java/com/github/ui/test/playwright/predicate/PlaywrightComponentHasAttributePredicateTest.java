@@ -31,7 +31,7 @@ class PlaywrightComponentHasAttributePredicateTest {
                 </html>
                 """.formatted(value))) {
 
-            var filteredLocator = predicate.filter(context.page(), context.page().locator("h1"));
+            var filteredLocator = predicate.filter(context.page(), context.locator("h1"));
             assertThat(filteredLocator).hasCount(not ? 0 : 1);
         }
     }
@@ -57,7 +57,7 @@ class PlaywrightComponentHasAttributePredicateTest {
                 </html>
                 """.formatted(value, value, "different than " + value))) {
 
-            var filteredLocator = predicate.filter(context.page(), context.page().locator("li"));
+            var filteredLocator = predicate.filter(context.page(), context.locator("li"));
             assertThat(filteredLocator).hasCount(not ? 3 : 2);
         }
     }
@@ -76,7 +76,7 @@ class PlaywrightComponentHasAttributePredicateTest {
                 </html>
                 """.formatted(value))) {
 
-            var filteredLocator = predicate.filter(context.page(), context.page().locator("h1"));
+            var filteredLocator = predicate.filter(context.page(), context.locator("h1"));
             assertThat(filteredLocator).hasCount(0);
         }
     }

@@ -3,10 +3,10 @@ package com.github.ui.test.playwright.assertion;
 import com.github.ui.test.core.assertion.UiTestComponentAssert;
 import com.github.ui.test.core.component.UiTestComponent;
 
-public class PlaywrightComponentAssert<ACTUAL extends UiTestComponent> extends AbstractPlaywrightComponentAssert<PlaywrightComponentAssert<ACTUAL>, ACTUAL>
-        implements UiTestComponentAssert<ACTUAL> {
+public class PlaywrightComponentAssert extends AbstractPlaywrightComponentAssert<PlaywrightComponentAssert, UiTestComponent>
+        implements UiTestComponentAssert {
 
-    public PlaywrightComponentAssert(ACTUAL actual) {
+    public PlaywrightComponentAssert(UiTestComponent actual) {
         super(actual, PlaywrightComponentAssert.class);
     }
 }

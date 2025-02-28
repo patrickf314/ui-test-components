@@ -6,7 +6,7 @@ import com.github.ui.test.core.context.UiTestPageContext;
 import java.util.function.Function;
 
 /**
- * {@link UiTestComponent} implementation for a HTML anchor {@code <a>}
+ * {@link UiTestComponent} implementation for an HTML anchor {@code <a>}
  *
  * @see UiTestComponent#anchorComponent()
  */

@@ -31,7 +31,7 @@ class PlaywrightComponentContainsTextPredicateTest {
                 </html>
                 """.formatted(text))) {
 
-            var filteredLocator = predicate.filter(context.page(), context.page().locator("span"));
+            var filteredLocator = predicate.filter(context.page(), context.locator("span"));
             assertThat(filteredLocator).hasCount(not ? 0 : 1);
         }
     }
@@ -57,7 +57,7 @@ class PlaywrightComponentContainsTextPredicateTest {
                 </html>
                 """.formatted(text, text, text.toLowerCase(Locale.ROOT), text.toLowerCase(Locale.ROOT)))) {
 
-            var filteredLocator = predicate.filter(context.page(), context.page().locator("li"));
+            var filteredLocator = predicate.filter(context.page(), context.locator("li"));
             assertThat(filteredLocator).hasCount(not ? 1 : 4);
         }
     }

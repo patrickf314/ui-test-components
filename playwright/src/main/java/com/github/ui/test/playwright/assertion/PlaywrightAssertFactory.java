@@ -5,13 +5,12 @@ import com.github.ui.test.core.assertion.HtmlCheckboxComponentAssert;
 import com.github.ui.test.core.assertion.HtmlInputComponentAssert;
 import com.github.ui.test.core.assertion.UiTestAssertFactory;
 import com.github.ui.test.core.component.*;
-import com.github.ui.test.playwright.component.PlaywrightCheckboxComponent;
 
 public class PlaywrightAssertFactory implements UiTestAssertFactory {
 
     @Override
-    public <T extends UiTestComponent> PlaywrightComponentAssert<T> componentAssert(T actual) {
-        return new PlaywrightComponentAssert<>(actual);
+    public PlaywrightComponentAssert componentAssert(UiTestComponent actual) {
+        return new PlaywrightComponentAssert(actual);
     }
 
     @Override

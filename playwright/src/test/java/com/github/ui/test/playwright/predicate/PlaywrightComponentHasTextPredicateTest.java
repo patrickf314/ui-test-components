@@ -29,7 +29,7 @@ class PlaywrightComponentHasTextPredicateTest {
                 </html>
                 """.formatted(text))) {
 
-            var filteredLocator = predicate.filter(context.page(), context.page().locator("h1"));
+            var filteredLocator = predicate.filter(context.page(), context.locator("h1"));
             assertThat(filteredLocator).hasCount(not ? 0 : 1);
         }
     }
@@ -50,7 +50,7 @@ class PlaywrightComponentHasTextPredicateTest {
                 </html>
                 """.formatted(text))) {
 
-            var filteredLocator = predicate.filter(context.page(), context.page().locator("h1"));
+            var filteredLocator = predicate.filter(context.page(), context.locator("h1"));
             assertThat(filteredLocator).hasCount(not ? 1 : 0);
         }
     }
@@ -76,7 +76,7 @@ class PlaywrightComponentHasTextPredicateTest {
                 </html>
                 """.formatted(text, text, text, "different than " + text, "also different than " + text))) {
 
-            var filteredLocator = predicate.filter(context.page(), context.page().locator("li"));
+            var filteredLocator = predicate.filter(context.page(), context.locator("li"));
             assertThat(filteredLocator).hasCount(not ? 2 : 3);
         }
     }

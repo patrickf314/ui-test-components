@@ -6,7 +6,6 @@ import com.github.ui.test.core.component.UiTestComponent;
 import com.github.ui.test.core.component.UiTestComponentList;
 import com.github.ui.test.core.predicate.UiTestComponentPredicate;
 import com.github.ui.test.playwright.context.PlaywrightComponentContext;
-import com.microsoft.playwright.assertions.LocatorAssertions;
 import lombok.extern.slf4j.Slf4j;
 import org.opentest4j.AssertionFailedError;
 
@@ -70,7 +69,7 @@ public class PlaywrightListComponentAssert<T extends UiTestComponent>
     }
 
     @Override
-    public UiTestComponentAssert<T> first() {
+    public UiTestComponentAssert first() {
         return assertThat(actual.get(0));
     }
 

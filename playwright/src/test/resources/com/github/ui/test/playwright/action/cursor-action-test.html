@@ -1,0 +1,36 @@
+<html lang="en">
+<head>
+    <title>Test Page</title>
+</head>
+<body>
+<div>
+    <div id="container"
+         style="width: 500px; height: 300px; border: 1px solid black"
+         onmousedown="handleMouseDown(event)"
+         onmouseup="handleMouseUp(event)">
+    </div>
+
+    <div id="startOutput"></div>
+    <div id="endOutput"></div>
+</div>
+<script type="text/javascript">
+    const startOutput = document.getElementById("startOutput")
+    const endOutput = document.getElementById("endOutput")
+
+    function handleMouseDown(event) {
+        startOutput.innerText = position(event)
+    }
+
+    function handleMouseUp(event) {
+        endOutput.innerText = position(event)
+    }
+
+    function position(event) {
+        const rect = event.target.getBoundingClientRect();
+        const x = event.clientX - rect.left; //x position within the element.
+        const y = event.clientY - rect.top;
+        return `(${x}, ${y})`
+    }
+</script>
+</body>
+</html>

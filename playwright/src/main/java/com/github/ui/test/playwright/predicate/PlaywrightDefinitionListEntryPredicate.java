@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 /**
  * Implementation of a {@link com.github.ui.test.core.predicate.UiTestComponentPredicate}
- * matching the entries of a HTML definition list.
+ * matching the entries of an HTML definition list.
  * <p>
  * This predicate assume, that the DOM has the form
  * {@code
