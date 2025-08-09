@@ -12,10 +12,6 @@
 
     function checkEditable() {
         counter--;
-        if (counter === 0) {
-            reject(new Error(`Element is still overlapped after ${timeout} seconds.`));
-            return;
-        }
 
         const rect = node.getBoundingClientRect();
         const x = rect.left + rect.width / 2;
@@ -31,6 +27,8 @@
 
         if (node.contains(elementAtPoint) || elementAtPoint === node) {
             resolve();
+        } else if (counter === 0) {
+            reject(new Error(`Element is still overlapped after ${timeout} seconds. Overlapping element: ${elementAtPoint.outerHTML}`));
         } else {
             setTimeout(checkEditable, 50);
         }

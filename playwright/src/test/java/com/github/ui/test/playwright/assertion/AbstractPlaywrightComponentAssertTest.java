@@ -29,9 +29,9 @@ class AbstractPlaywrightComponentAssertTest {
                             Received: 0
                             
                             Call log:
-                              - Locator.expect with timeout 100ms
+                              - Locator.expect with timeout 1000ms
                               - waiting for locator("h1").filter(new Locator.FilterOptions().setHas(getByText("Some other text", new Page.GetByTextOptions().setExact(true))))
-                                2 × locator resolved to 0 elements
+                                5 × locator resolved to 0 elements
                                   - unexpected value "0\"""")
                     .isInstanceOfSatisfying(AssertionFailedError.class, error -> {
                         assertThat(error.getActual().getStringRepresentation()).isEqualTo("text('Text')");
@@ -57,9 +57,9 @@ class AbstractPlaywrightComponentAssertTest {
                             Received: 1
                             
                             Call log:
-                              - Locator.expect with timeout 100ms
+                              - Locator.expect with timeout 1000ms
                               - waiting for locator("h1").filter(new Locator.FilterOptions().setHas(getByText("Text", new Page.GetByTextOptions().setExact(true))))
-                                2 × locator resolved to 1 element
+                                5 × locator resolved to 1 element
                                   - unexpected value "1\"""")
                     .isInstanceOfSatisfying(AssertionFailedError.class, error -> {
                         assertThat(error.getActual().getStringRepresentation()).isEqualTo("text('Text')");

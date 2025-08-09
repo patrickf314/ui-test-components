@@ -12,7 +12,7 @@ class PlaywrightCursorActionTest {
 
     @Test
     void testActionStartesAtTopLeft() {
-        try(var context = mockPage(getClass().getResourceAsStream("cursor-action-test.html"))) {
+        try(var context = mockPage(getClass().getResourceAsStream("/html/cursor-action-test.html"))) {
             context.component("#container").cursor().down().up();
 
             assertThat(context.locator("#startOutput")).hasText("(0, 0)");
@@ -22,7 +22,7 @@ class PlaywrightCursorActionTest {
 
     @Test
     void testMoveAction() {
-        try(var context = mockPage(getClass().getResourceAsStream("cursor-action-test.html"))) {
+        try(var context = mockPage(getClass().getResourceAsStream("/html/cursor-action-test.html"))) {
             context.component("#container").cursor().move(10, 10).down().move(200, 100).up();
 
             assertThat(context.locator("#startOutput")).hasText("(10, 10)");

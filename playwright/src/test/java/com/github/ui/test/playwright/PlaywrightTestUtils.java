@@ -2,6 +2,7 @@ package com.github.ui.test.playwright;
 
 import com.github.ui.test.common.io.IOUtils;
 import com.github.ui.test.core.component.UiTestComponent;
+import com.github.ui.test.core.context.UiTestComponentContext;
 import com.github.ui.test.playwright.context.PlaywrightComponentContext;
 import com.github.ui.test.playwright.context.PlaywrightPageContext;
 import com.microsoft.playwright.Browser;
@@ -13,13 +14,14 @@ import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.Duration;
+import java.util.function.Function;
 
 public class PlaywrightTestUtils {
 
     private static final Duration TIMEOUT = Duration.ofSeconds(1);
 
     public static PlaywrightTestContext mockPage(InputStream content) {
-        if(content == null) {
+        if (content == null) {
             throw new IllegalArgumentException("Content must not be null");
         }
 
@@ -68,7 +70,11 @@ public class PlaywrightTestUtils {
         }
 
         public UiTestComponent component(String selector) {
-            return new UiTestComponent(componentContext(selector));
+            return component(selector, UiTestComponent::new);
+        }
+
+        public <T extends UiTestComponent> T component(String selector, Function<UiTestComponentContext, T> componentConstructor) {
+            return componentConstructor.apply(componentContext(selector));
         }
 
         @Override

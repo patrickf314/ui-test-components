@@ -1,6 +1,7 @@
 package com.github.ui.test.playwright.context;
 
 import com.github.ui.test.core.action.UiTestCursorAction;
+import com.github.ui.test.core.action.UiTestScrollAction;
 import com.github.ui.test.core.component.UiTestComponent;
 import com.github.ui.test.core.component.UiTestPage;
 import com.github.ui.test.core.context.UiTestComponentContext;
@@ -9,6 +10,7 @@ import com.github.ui.test.core.data.UiTestDownload;
 import com.github.ui.test.core.predicate.UiTestComponentPredicate;
 import com.github.ui.test.core.selector.Selector;
 import com.github.ui.test.playwright.action.PlaywrightCursorAction;
+import com.github.ui.test.playwright.action.PlaywrightScrollAction;
 import com.github.ui.test.playwright.component.PlaywrightListComponent;
 import com.github.ui.test.playwright.predicate.PlaywrightComponentPredicateFactory;
 import com.github.ui.test.playwright.selector.PlaywrightSelectorFactory;
@@ -74,6 +76,11 @@ public class PlaywrightComponentContext implements UiTestComponentContext {
     @Override
     public UiTestCursorAction cursor() {
         return new PlaywrightCursorAction(this);
+    }
+
+    @Override
+    public UiTestScrollAction scroll() {
+        return new PlaywrightScrollAction(this);
     }
 
     public <T extends UiTestComponent> T nth(Function<UiTestComponentContext, T> component, int index) {

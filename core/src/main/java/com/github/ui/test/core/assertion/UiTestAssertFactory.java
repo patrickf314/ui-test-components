@@ -26,6 +26,8 @@ public interface UiTestAssertFactory {
 
     <T extends UiTestComponent, D extends UiTestComponent> HtmlDefinitionListComponentAssert<T, D> htmlDefinitionListComponentAssert(HtmlDefinitionListComponent<T, D> actual);
 
+    HtmlImageComponentAssert htmlImageComponentAssert(HtmlImageComponent actual);
+
     HtmlInputComponentAssert htmlInputComponentAssert(HtmlInputComponent actual);
 
     HtmlSelectComponentAssert htmlSelectComponentAssert(HtmlSelectComponent actual);

@@ -123,6 +123,22 @@ public class UiTestComponent extends UiTestElement<UiTestComponentContext> {
         return context -> getEnvironment().getComponentFactory().definitionListComponent(context, titleConstructor, descriptionConstructor);
     }
 
+    /**
+     * Constructing function of an {@link HtmlImageComponent}
+     *
+     * @return the component constructor
+     */
+    public static Function<UiTestComponentContext, HtmlImageComponent> imageComponent() {
+        return getEnvironment().getComponentFactory()::imageComponent;
+    }
+
+    /**
+     * Constructing function of an {@link HtmlImageComponent}
+     *
+     * @param entryConstructor the constructing function of the entry component
+     * @param <T>              the entry component type
+     * @return the component constructor
+     */
     public static <T extends UiTestComponent> Function<UiTestComponentContext, HtmlTableComponent<T>> tableComponent(Function<UiTestComponentContext, T> entryConstructor) {
         return context -> getEnvironment().getComponentFactory().tableComponent(context, entryConstructor);
     }

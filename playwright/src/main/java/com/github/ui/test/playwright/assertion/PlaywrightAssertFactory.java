@@ -1,9 +1,6 @@
 package com.github.ui.test.playwright.assertion;
 
-import com.github.ui.test.core.assertion.HtmlButtonComponentAssert;
-import com.github.ui.test.core.assertion.HtmlCheckboxComponentAssert;
-import com.github.ui.test.core.assertion.HtmlInputComponentAssert;
-import com.github.ui.test.core.assertion.UiTestAssertFactory;
+import com.github.ui.test.core.assertion.*;
 import com.github.ui.test.core.component.*;
 
 public class PlaywrightAssertFactory implements UiTestAssertFactory {
@@ -31,6 +28,11 @@ public class PlaywrightAssertFactory implements UiTestAssertFactory {
     @Override
     public <T extends UiTestComponent, D extends UiTestComponent> PlaywrightDefinitionListComponentAssert<T, D> htmlDefinitionListComponentAssert(HtmlDefinitionListComponent<T, D> actual) {
         return new PlaywrightDefinitionListComponentAssert<>(actual);
+    }
+
+    @Override
+    public HtmlImageComponentAssert htmlImageComponentAssert(HtmlImageComponent actual) {
+        return new PlaywrightImageComponentAssert(actual);
     }
 
     @Override

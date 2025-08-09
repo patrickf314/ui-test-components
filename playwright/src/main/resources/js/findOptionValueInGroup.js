@@ -1,4 +1,4 @@
-// Select an option from the data list of an input element which start with a specific prefix
+// Select an option from the data list of an input element which starts with a specific prefix
 // noinspection BadExpressionStatementJS
 /**
  * Getter for the first option starting with the given prefix.

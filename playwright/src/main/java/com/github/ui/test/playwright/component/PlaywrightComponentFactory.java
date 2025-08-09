@@ -44,6 +44,11 @@ public class PlaywrightComponentFactory implements UiTestComponentFactory {
         return new PlaywrightDefinitionListComponent<>(context, titleConstructor, descriptionConstructor);
     }
 
+    @Override
+    public HtmlImageComponent imageComponent(UiTestComponentContext context) {
+        return new PlaywrightImageComponent(context);
+    }
+
     public static PlaywrightComponentContext requirePlaywrightContext(UiTestComponentContext context) {
         if (context instanceof PlaywrightComponentContext playwrightContext) {
             return playwrightContext;

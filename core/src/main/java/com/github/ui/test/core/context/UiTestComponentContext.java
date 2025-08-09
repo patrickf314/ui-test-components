@@ -1,6 +1,7 @@
 package com.github.ui.test.core.context;
 
 import com.github.ui.test.core.action.UiTestCursorAction;
+import com.github.ui.test.core.action.UiTestScrollAction;
 import com.github.ui.test.core.selector.Selector;
 
 public interface UiTestComponentContext extends UiTestElementContext {
@@ -33,4 +34,12 @@ public interface UiTestComponentContext extends UiTestElementContext {
      * @return the mouse action
      */
     UiTestCursorAction cursor();
+
+    /**
+     * Getter of a {@link UiTestScrollAction} in this component.
+     *
+     *
+     * @return the scroll action
+     */
+    UiTestScrollAction scroll();
 }

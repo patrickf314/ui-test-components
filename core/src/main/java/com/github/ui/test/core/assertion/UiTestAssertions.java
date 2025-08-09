@@ -65,6 +65,16 @@ public class UiTestAssertions extends Assertions {
     }
 
     /**
+     * Assert for a {@link HtmlImageComponent}
+     *
+     * @param actual the actual image component
+     * @return the image component assert
+     */
+    public static HtmlImageComponentAssert assertThat(HtmlImageComponent actual) {
+        return getEnvironment().getAssertFactory().htmlImageComponentAssert(actual);
+    }
+
+    /**
      * Assert for a {@link HtmlInputComponent}
      *
      * @param actual the actual input component
