@@ -40,7 +40,8 @@ public class PlaywrightTestUtils {
         var page = browser.newPage();
 
         page.setDefaultTimeout(TIMEOUT.toMillis());
-        page.setContent(content);
+        page.setContent(content, new Page.SetContentOptions()
+                .setTimeout(Duration.ofSeconds(10).toMillis()));
 
         return new PlaywrightTestContext(playwright, browser, page);
     }
