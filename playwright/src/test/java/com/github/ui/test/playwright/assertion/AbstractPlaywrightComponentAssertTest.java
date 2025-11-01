@@ -25,11 +25,12 @@ class AbstractPlaywrightComponentAssertTest {
                     .doesNotThrowAnyException();
             assertThatThrownBy(() -> componentAssert.satisfies(new PlaywrightComponentHasTextPredicate(false, "Some other text")))
                     .hasMessage("""
-                            Locator expected to have count: 1
+                            Locator expected to have count
+                            Expected: 1
                             Received: 0
                             
                             Call log:
-                              - Locator.expect with timeout 1000ms
+                              - Assert "hasCount" with timeout 1000ms
                               - waiting for locator("h1").filter(new Locator.FilterOptions().setHas(getByText("Some other text", new Page.GetByTextOptions().setExact(true))))
                                 5 × locator resolved to 0 elements
                                   - unexpected value "0\"""")
@@ -53,11 +54,12 @@ class AbstractPlaywrightComponentAssertTest {
                     .doesNotThrowAnyException();
             assertThatThrownBy(() -> componentAssert.doesNotSatisfy(new PlaywrightComponentHasTextPredicate(false, "Text")))
                     .hasMessage("""
-                            Locator expected to have count: 0
+                            Locator expected to have count
+                            Expected: 0
                             Received: 1
                             
                             Call log:
-                              - Locator.expect with timeout 1000ms
+                              - Assert "hasCount" with timeout 1000ms
                               - waiting for locator("h1").filter(new Locator.FilterOptions().setHas(getByText("Text", new Page.GetByTextOptions().setExact(true))))
                                 5 × locator resolved to 1 element
                                   - unexpected value "1\"""")

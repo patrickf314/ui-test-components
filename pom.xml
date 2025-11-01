@@ -19,7 +19,7 @@
         <playwright.version>1.56.0</playwright.version>
         <junit.version>6.0.0</junit.version>
         <easyrandom.version>5.0.0</easyrandom.version>
-        <mockito.version>5.15.2</mockito.version>
+        <mockito.version>5.20.0</mockito.version>
         <logback.version>1.5.20</logback.version>
         <assertj.version>3.27.6</assertj.version>
         <slf4j-api.version>2.0.17</slf4j-api.version>
@@ -29,10 +29,11 @@
         <module>bom</module>
 
         <module>core</module>
+        <module>common</module>
+
         <module>playwright</module>
 
         <module>examples/playwright-example</module>
-        <module>common</module>
     </modules>
 
     <distributionManagement>
@@ -51,7 +52,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.13.0</version>
+                <version>3.14.1</version>
                 <configuration>
                     <annotationProcessorPaths>
                         <path>
@@ -71,14 +72,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.5.0</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.junit.jupiter</groupId>
-                        <artifactId>junit-jupiter-engine</artifactId>
-                        <version>${junit.version}</version>
-                    </dependency>
-                </dependencies>
+                <version>3.5.4</version>
             </plugin>
         </plugins>
     </build>
