@@ -44,6 +44,12 @@ public interface UiTestListComponentAssert<T extends UiTestComponent> {
 
     UiTestListComponentAssert<T> containsExactly(List<UiTestComponentPredicate> itemPredicates);
 
+    default UiTestListComponentAssert<T> containsExactlyInAnyOrder(UiTestComponentPredicate... itemPredicates) {
+        return containsExactlyInAnyOrder(Arrays.asList(itemPredicates));
+    }
+
+    UiTestListComponentAssert<T> containsExactlyInAnyOrder(List<UiTestComponentPredicate> itemPredicates);
+
     default UiTestListComponentAssert<T> doesNotContainElementWithText(String text) {
         return doesNotContain(UiTestComponentPredicate.hasText(text));
     }

@@ -69,6 +69,16 @@ public class PlaywrightListComponentAssert<T extends UiTestComponent>
     }
 
     @Override
+    public PlaywrightListComponentAssert<T> containsExactlyInAnyOrder(List<UiTestComponentPredicate> itemPredicates) {
+        hasSize(itemPredicates.size());
+        for (var itemPredicate : itemPredicates) {
+            filteredListAssert(itemPredicate).hasSize(1);
+        }
+        return this;
+    }
+
+
+    @Override
     public UiTestComponentAssert first() {
         return assertThat(actual.get(0));
     }
