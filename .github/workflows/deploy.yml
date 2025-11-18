@@ -25,6 +25,11 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: Maven Configuration
+        run: |
+          mkdir -p ~/.m2
+          cp .github/maven-settings.xml ~/.m2/settings.xml
+
       - name: Deploy Maven Artifacts
         run: mvn --batch-mode deploy -DskipTests
         env:
