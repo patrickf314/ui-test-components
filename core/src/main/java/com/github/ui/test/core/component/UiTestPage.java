@@ -21,5 +21,9 @@ public abstract class UiTestPage extends UiTestElement<UiTestPageContext> {
         return getContext().reload(constructor);
     }
 
+    public <T extends UiTestPage> T navigateTo(Function<UiTestPageContext, T> constructor, String path) {
+        return getContext().navigateTo(constructor, path);
+    }
+
     public abstract boolean matchesUrl(UiTestPageContext.Url url);
 }

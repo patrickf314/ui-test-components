@@ -83,6 +83,12 @@ public class PlaywrightPageContext implements UiTestPageContext {
         return waitForPage(constructor);
     }
 
+    @Override
+    public <T extends UiTestPage> T navigateTo(Function<UiTestPageContext, T> constructor, String path) {
+        page.navigate(baseUrl + path);
+        return waitForPage(constructor);
+    }
+
     private Optional<Url> parseLocation(String url) {
         if (url.length() < baseUrl.length()) {
             return Optional.empty();

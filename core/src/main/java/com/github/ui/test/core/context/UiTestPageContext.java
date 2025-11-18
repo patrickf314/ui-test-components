@@ -13,6 +13,8 @@ public interface UiTestPageContext extends UiTestElementContext {
 
     <T extends UiTestPage> T reload(Function<UiTestPageContext, T> constructor);
 
+    <T extends UiTestPage> T navigateTo(Function<UiTestPageContext, T> constructor, String path);
+
     record Url(String baseUrl, String path, Map<String, String> queryParameters, String anchor) {
     }
 }
