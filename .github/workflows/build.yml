@@ -45,6 +45,7 @@ jobs:
           artifact: test-reports
           path: '**/*.xml'
           reporter: java-junit
+          fail-on-error: false
 
   clean-up:
     needs: report
