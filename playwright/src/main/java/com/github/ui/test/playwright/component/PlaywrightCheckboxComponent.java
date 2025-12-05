@@ -2,7 +2,6 @@ package com.github.ui.test.playwright.component;
 
 import com.github.ui.test.core.component.HtmlCheckboxComponent;
 import com.github.ui.test.core.context.UiTestComponentContext;
-import com.microsoft.playwright.Locator;
 
 import static com.github.ui.test.playwright.component.PlaywrightComponentFactory.requirePlaywrightContext;
 
