@@ -16,7 +16,7 @@
 
         <lombok.version>1.18.42</lombok.version>
         <mapstruct.version>1.6.3</mapstruct.version>
-        <playwright.version>1.56.0</playwright.version>
+        <playwright.version>1.57.0</playwright.version>
         <junit.version>6.0.1</junit.version>
         <easyrandom.version>5.0.0</easyrandom.version>
         <mockito.version>5.20.0</mockito.version>
