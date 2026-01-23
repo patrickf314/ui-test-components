@@ -15,6 +15,7 @@ import com.github.ui.test.playwright.component.PlaywrightListComponent;
 import com.github.ui.test.playwright.predicate.PlaywrightComponentPredicateFactory;
 import com.github.ui.test.playwright.selector.PlaywrightSelectorFactory;
 import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.options.WaitForSelectorState;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -112,6 +113,7 @@ public class PlaywrightComponentContext implements UiTestComponentContext {
                 arg.put("parameter", parameter);
             }
 
+            locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.ATTACHED));
             return locator.evaluate(expression, arg);
         } catch (IOException e) {
             throw new IllegalStateException("Failed to load script " + script, e);
