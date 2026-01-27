@@ -21,7 +21,7 @@
         <easyrandom.version>5.0.0</easyrandom.version>
         <mockito.version>5.21.0</mockito.version>
         <logback.version>1.5.26</logback.version>
-        <assertj.version>3.27.6</assertj.version>
+        <assertj.version>3.27.7</assertj.version>
         <slf4j-api.version>2.0.17</slf4j-api.version>
         <testcontainers.version>2.0.3</testcontainers.version>
     </properties>
