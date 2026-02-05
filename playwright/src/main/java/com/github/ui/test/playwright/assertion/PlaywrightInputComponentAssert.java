@@ -13,7 +13,12 @@ public class PlaywrightInputComponentAssert
 
     @Override
     public PlaywrightInputComponentAssert hasValue(String value) {
-        locatorAssertions().hasValue(value);
+        try {
+            locatorAssertions().hasValue(value);
+        } catch (AssertionError error) {
+            var actual = getActualLocator().inputValue();
+            throw withActualExpected(error, "value(" + (actual == null ? "<NULL>" : "\"" + actual + "\"") + ")", "value(\"" + value + "\")");
+        }
         return this;
     }
 }

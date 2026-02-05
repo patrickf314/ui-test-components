@@ -8,6 +8,8 @@ import com.microsoft.playwright.assertions.LocatorAssertions;
 import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import org.assertj.core.api.AbstractAssert;
 
+import java.util.function.Consumer;
+
 import static com.github.ui.test.playwright.predicate.PlaywrightComponentPredicateFactory.requirePlaywrightPredicate;
 
 public abstract class AbstractPlaywrightAssert<SELF extends AbstractAssert<SELF, ACTUAl>, ACTUAl> extends AbstractAssert<SELF, ACTUAl> {
@@ -43,7 +45,19 @@ public abstract class AbstractPlaywrightAssert<SELF extends AbstractAssert<SELF,
         return failureWithActualExpected(
                 actual,
                 expected,
-                error.getMessage()
+                getActualContext().contextSpecificErrorMessage("Assertion error", error.getMessage())
         );
+    }
+
+    protected void wrapPlaywrightAssertion(Consumer<LocatorAssertions> assertion, String expected) {
+        wrapPlaywrightAssertion(() -> assertion.accept(locatorAssertions()), expected);
+    }
+
+    protected void wrapPlaywrightAssertion(Runnable assertion, String expected) {
+        try {
+            assertion.run();
+        } catch (AssertionError error) {
+            throw withActualExpected(error, this.getClass().getSimpleName(), expected);
+        }
     }
 }

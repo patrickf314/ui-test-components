@@ -33,13 +33,18 @@ public class PlaywrightListComponentAssert<T extends UiTestComponent>
 
     @Override
     public PlaywrightListComponentAssert<T> hasSize(int size) {
-        locatorAssertions().hasCount(size);
+        try {
+            locatorAssertions().hasCount(size);
+        }catch (AssertionError error) {
+            var actual = getActualLocator().count();
+            throw withActualExpected(error, "size(" + actual + ")", "size(" + size + ")");
+        }
         return this;
     }
 
     @Override
     public PlaywrightListComponentAssert<T> isNotEmpty() {
-        locatorAssertions().not().hasCount(0);
+        wrapPlaywrightAssertion(() -> locatorAssertions().not().hasCount(0), "not to be empty");
         return this;
     }
 

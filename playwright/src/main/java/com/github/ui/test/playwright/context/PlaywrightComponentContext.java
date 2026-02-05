@@ -15,6 +15,7 @@ import com.github.ui.test.playwright.component.PlaywrightListComponent;
 import com.github.ui.test.playwright.predicate.PlaywrightComponentPredicateFactory;
 import com.github.ui.test.playwright.selector.PlaywrightSelectorFactory;
 import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.TimeoutError;
 import com.microsoft.playwright.options.WaitForSelectorState;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,7 @@ public class PlaywrightComponentContext implements UiTestComponentContext {
 
     private final PlaywrightPageContext pageContext;
     private final Locator locator;
+    private final String path;
 
     @Override
     public <T extends UiTestPage> T waitForPage(Function<UiTestPageContext, T> constructor) {
@@ -44,20 +46,32 @@ public class PlaywrightComponentContext implements UiTestComponentContext {
 
     @Override
     public <T extends UiTestComponent> T getChild(Function<UiTestComponentContext, T> component, Selector selector) {
-        return component.apply(new PlaywrightComponentContext(pageContext, PlaywrightSelectorFactory.requirePlaywrightSelector(selector).asChildLocatorOf(locator)));
+        return component.apply(new PlaywrightComponentContext(
+                pageContext,
+                PlaywrightSelectorFactory.requirePlaywrightSelector(selector).asChildLocatorOf(locator),
+                path + " > " + selector
+        ));
     }
 
     @Override
     public <T extends UiTestComponent> PlaywrightListComponent<T> getChildList(Function<UiTestComponentContext, T> component, Selector selector) {
         return new PlaywrightListComponent<>(
-                new PlaywrightComponentContext(pageContext, PlaywrightSelectorFactory.requirePlaywrightSelector(selector).asChildLocatorOf(locator)),
+                new PlaywrightComponentContext(
+                        pageContext,
+                        PlaywrightSelectorFactory.requirePlaywrightSelector(selector).asChildLocatorOf(locator),
+                        path + " > " + selector
+                ),
                 component
         );
     }
 
     @Override
     public void click(Selector... selectors) {
-        select(selectors).click();
+        try {
+            select(selectors).click();
+        } catch (TimeoutError error) {
+            throw new IllegalStateException(actionTimeoutErrorMessage("click"), error);
+        }
     }
 
     @Override
@@ -66,12 +80,21 @@ public class PlaywrightComponentContext implements UiTestComponentContext {
         if (!childLocator.isVisible() && skipIfInvisible) {
             return;
         }
-        childLocator.hover();
+
+        try {
+            childLocator.hover();
+        } catch (TimeoutError error) {
+            throw new IllegalStateException(actionTimeoutErrorMessage("hover"), error);
+        }
     }
 
     @Override
     public void sendKeys(String text, Selector... selectors) {
-        select(selectors).pressSequentially(text, new Locator.PressSequentiallyOptions().setDelay(50));
+        try {
+            select(selectors).pressSequentially(text, new Locator.PressSequentiallyOptions().setDelay(50));
+        } catch (TimeoutError error) {
+            throw new IllegalStateException(actionTimeoutErrorMessage("sendKeys"), error);
+        }
     }
 
     @Override
@@ -85,12 +108,20 @@ public class PlaywrightComponentContext implements UiTestComponentContext {
     }
 
     public <T extends UiTestComponent> T nth(Function<UiTestComponentContext, T> component, int index) {
-        return component.apply(new PlaywrightComponentContext(pageContext, locator.nth(index)));
+        return component.apply(new PlaywrightComponentContext(
+                pageContext,
+                locator.nth(index),
+                path + " :: nth(" + index + ")"
+        ));
     }
 
     public <T extends UiTestComponent> PlaywrightListComponent<T> filter(Function<UiTestComponentContext, T> itemConstructor, UiTestComponentPredicate predicate) {
         return new PlaywrightListComponent<>(
-                new PlaywrightComponentContext(pageContext, PlaywrightComponentPredicateFactory.requirePlaywrightPredicate(predicate).filter(pageContext.getPage(), locator)),
+                new PlaywrightComponentContext(
+                        pageContext,
+                        PlaywrightComponentPredicateFactory.requirePlaywrightPredicate(predicate).filter(pageContext.getPage(), locator),
+                        path + " :: filter(" + predicate.describeExpected() + ")"
+                ),
                 itemConstructor
         );
     }
@@ -126,5 +157,23 @@ public class PlaywrightComponentContext implements UiTestComponentContext {
             childSelector = PlaywrightSelectorFactory.requirePlaywrightSelector(selector).asChildLocatorOf(childSelector);
         }
         return childSelector;
+    }
+
+    private String actionTimeoutErrorMessage(String action) {
+        return contextSpecificErrorMessage(
+                "Timeout during " +  action + " action",
+                "Element not found or not interactable within the specified timeout."
+        );
+    }
+
+    public String contextSpecificErrorMessage(String title, String description) {
+        return """
+                Component error: %s
+                -------------------------------------------------------------------------
+                Path: %s
+                URL:  %s
+                Error: %s
+                --------------------------------------------------------------------------
+                """.formatted(title, path, pageContext.getUrl().baseUrl(), description);
     }
 }

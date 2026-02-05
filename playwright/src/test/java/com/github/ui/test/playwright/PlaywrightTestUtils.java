@@ -67,7 +67,7 @@ public class PlaywrightTestUtils {
         }
 
         public PlaywrightComponentContext componentContext(PlaywrightPageContext pageContext, String selector) {
-            return new PlaywrightComponentContext(pageContext, locator(selector));
+            return new PlaywrightComponentContext(pageContext, locator(selector), selector);
         }
 
         public UiTestComponent component(String selector) {

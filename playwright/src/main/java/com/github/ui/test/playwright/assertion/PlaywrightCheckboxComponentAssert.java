@@ -14,13 +14,13 @@ public class PlaywrightCheckboxComponentAssert
 
     @Override
     public HtmlCheckboxComponentAssert isChecked() {
-        locatorAssertions().isChecked();
+        wrapPlaywrightAssertion(LocatorAssertions::isChecked, "to be checked");
         return this;
     }
 
     @Override
     public HtmlCheckboxComponentAssert isNotChecked() {
-        locatorAssertions().isChecked(new LocatorAssertions.IsCheckedOptions().setChecked(false));
+        wrapPlaywrightAssertion(() -> locatorAssertions().isChecked(new LocatorAssertions.IsCheckedOptions().setChecked(false)), "to not be checked");
         return this;
     }
 }

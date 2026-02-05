@@ -45,13 +45,21 @@ public class PlaywrightPageContext implements UiTestPageContext {
 
     @Override
     public <T extends UiTestComponent> T getChild(Function<UiTestComponentContext, T> component, Selector selector) {
-        return component.apply(new PlaywrightComponentContext(this, requirePlaywrightSelector(selector).locateOn(page)));
+        return component.apply(new PlaywrightComponentContext(
+                this,
+                requirePlaywrightSelector(selector).locateOn(page),
+                selector.toString()
+        ));
     }
 
     @Override
     public <T extends UiTestComponent> UiTestComponentList<T> getChildList(Function<UiTestComponentContext, T> component, Selector selector) {
         return new PlaywrightListComponent<>(
-                new PlaywrightComponentContext(this, requirePlaywrightSelector(selector).locateOn(page)),
+                new PlaywrightComponentContext(
+                        this,
+                        requirePlaywrightSelector(selector).locateOn(page),
+                        selector.toString()
+                ),
                 component
         );
     }
