@@ -22,7 +22,7 @@
         <mockito.version>5.23.0</mockito.version>
         <logback.version>1.5.32</logback.version>
         <assertj.version>3.27.7</assertj.version>
-        <slf4j-api.version>2.0.17</slf4j-api.version>
+        <slf4j-api.version>2.0.18</slf4j-api.version>
         <testcontainers.version>2.0.5</testcontainers.version>
     </properties>
 
