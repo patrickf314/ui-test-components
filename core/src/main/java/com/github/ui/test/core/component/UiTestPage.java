@@ -3,13 +3,12 @@ package com.github.ui.test.core.component;
 import com.github.ui.test.core.context.UiTestPageContext;
 import lombok.Getter;
 
-import java.util.Map;
 import java.util.function.Function;
 
 @Getter
 public abstract class UiTestPage extends UiTestElement<UiTestPageContext> {
 
-    public UiTestPage(UiTestPageContext context) {
+    protected UiTestPage(UiTestPageContext context) {
         super(context);
     }
 

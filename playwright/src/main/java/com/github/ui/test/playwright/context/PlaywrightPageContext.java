@@ -32,6 +32,12 @@ public class PlaywrightPageContext implements UiTestPageContext {
 
     private final String baseUrl;
     private final Page page;
+    private final Object properties;
+
+    @Override
+    public <T> T getProperties(Class<T> propertyType) {
+        return propertyType.cast(properties);
+    }
 
     @Override
     public void close() {
@@ -40,7 +46,7 @@ public class PlaywrightPageContext implements UiTestPageContext {
 
     @Override
     public Url getUrl() {
-        return parseLocation(page.url()).orElseThrow(() -> new IllegalStateException("Failed to parse current url"));
+        return parseLocation(baseUrl, page.url()).orElseThrow(() -> new IllegalStateException("Failed to parse current url"));
     }
 
     @Override
@@ -69,7 +75,7 @@ public class PlaywrightPageContext implements UiTestPageContext {
         var testPage = constructor.apply(this);
 
         try {
-            page.waitForURL(url -> parseLocation(url)
+            page.waitForURL(url -> parseLocation(testPage.getContext().getBaseUrl(), url)
                     .filter(testPage::matchesUrl)
                     .isPresent());
         } catch (PlaywrightException e) {
@@ -97,17 +103,22 @@ public class PlaywrightPageContext implements UiTestPageContext {
         return waitForPage(constructor);
     }
 
-    private Optional<Url> parseLocation(String url) {
+    @Override
+    public UiTestPageContext withBaseUrl(String baseUrl) {
+        return new PlaywrightPageContext(baseUrl, page, properties);
+    }
+
+    private static Optional<Url> parseLocation(String baseUrl, String url) {
         if (url.length() < baseUrl.length()) {
             return Optional.empty();
         }
 
-        var baseUrl = url.substring(0, this.baseUrl.length());
-        if (!baseUrl.equalsIgnoreCase(this.baseUrl)) {
+        var actualBaseUrl = url.substring(0, baseUrl.length());
+        if (!actualBaseUrl.equalsIgnoreCase(baseUrl)) {
             return Optional.empty();
         }
 
-        var path = url.substring(this.baseUrl.length());
+        var path = url.substring(baseUrl.length());
 
         var i = path.indexOf('?');
         var queryParameters = Collections.<String, String>emptyMap();
@@ -119,13 +130,11 @@ public class PlaywrightPageContext implements UiTestPageContext {
         var j = path.indexOf('#');
         String anchor = null;
         if (j != -1) {
-            anchor = anchor.substring(j + 1);
+            anchor = path.substring(j + 1);
             path = path.substring(0, j);
         }
 
-        return Optional.of(new Url(
-                baseUrl, path, queryParameters, anchor
-        ));
+        return Optional.of(new Url(baseUrl, path, queryParameters, anchor));
     }
 
     private static Map<String, String> parseQueryParameters(String query) {

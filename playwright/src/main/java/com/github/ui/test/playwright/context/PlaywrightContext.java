@@ -17,6 +17,7 @@ import java.io.File;
 import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 @Slf4j
@@ -27,30 +28,30 @@ public class PlaywrightContext implements UiTestContext {
     private static final PlaywrightCookieMapper COOKIE_MAPPER = Mappers.getMapper(PlaywrightCookieMapper.class);
 
     private final Duration defaultTimeout;
-    private final String baseUrl;
     private final String outputDirectory;
     private final String testName;
     private final BrowserContext browserContext;
+    private final Object properties;
 
     @Override
     public void close() {
         log.info("Closing test context for {}", testName);
 
         if (!PlaywrightUiTestEnvironment.getEnvironment().getOptions().isTracesDisabled()) {
-            browserContext.tracing().stop(new Tracing.StopOptions()
-                    .setPath(Paths.get(outputDirectory, "traces", testName.replace('.', File.separatorChar) + ".zip"))
-            );
+            var path = Paths.get(outputDirectory, "traces", testName.replace('.', File.separatorChar) + ".zip");
+            browserContext.tracing().stop(new Tracing.StopOptions().setPath(path));
+            log.info("Traces of the UI test {} is saved in \n\n \t file://{} \n", testName, path.toAbsolutePath().getParent());
         }
 
         browserContext.close();
     }
 
     @Override
-    public <T extends UiTestPage> T openNewPage(Function<UiTestPageContext, T> pageConstructor, String path) {
+    public <T extends UiTestPage> T openNewPage(Function<UiTestPageContext, T> pageConstructor, String newBaseUrl, String path) {
         var page = browserContext.newPage();
         page.setDefaultTimeout(defaultTimeout.toMillis());
-        page.navigate(baseUrl + path);
-        var pageContext = new PlaywrightPageContext(baseUrl, page);
+        page.navigate(newBaseUrl + path);
+        var pageContext = new PlaywrightPageContext(newBaseUrl, page, properties);
         return pageContext.waitForPage(pageConstructor);
     }
 

@@ -12,7 +12,7 @@ public interface UiTestContext {
 
     void close();
 
-    <T extends UiTestPage> T openNewPage(Function<UiTestPageContext, T> pageConstructor, String path);
+    <T extends UiTestPage> T openNewPage(Function<UiTestPageContext, T> pageConstructor, String baseUrl, String path);
 
     List<UiTestCookie> getCookies();
 

@@ -35,6 +35,11 @@ public class PlaywrightComponentContext implements UiTestComponentContext {
     private final String path;
 
     @Override
+    public <T> T getProperties(Class<T> propertyType) {
+        return pageContext.getProperties(propertyType);
+    }
+
+    @Override
     public <T extends UiTestPage> T waitForPage(Function<UiTestPageContext, T> constructor) {
         return pageContext.waitForPage(constructor);
     }
@@ -161,7 +166,7 @@ public class PlaywrightComponentContext implements UiTestComponentContext {
 
     private String actionTimeoutErrorMessage(String action) {
         return contextSpecificErrorMessage(
-                "Timeout during " +  action + " action",
+                "Timeout during " + action + " action",
                 "Element not found or not interactable within the specified timeout."
         );
     }

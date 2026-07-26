@@ -15,6 +15,10 @@ public interface UiTestPageContext extends UiTestElementContext {
 
     <T extends UiTestPage> T navigateTo(Function<UiTestPageContext, T> constructor, String path);
 
+    String getBaseUrl();
+
+    UiTestPageContext withBaseUrl(String baseUrl);
+
     record Url(String baseUrl, String path, Map<String, String> queryParameters, String anchor) {
 
         @Override

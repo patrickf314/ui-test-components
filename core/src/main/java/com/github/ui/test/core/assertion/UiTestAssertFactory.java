@@ -1,6 +1,13 @@
 package com.github.ui.test.core.assertion;
 
-import com.github.ui.test.core.component.*;
+import com.github.ui.test.core.component.HtmlButtonComponent;
+import com.github.ui.test.core.component.HtmlCheckboxComponent;
+import com.github.ui.test.core.component.HtmlDefinitionListComponent;
+import com.github.ui.test.core.component.HtmlImageComponent;
+import com.github.ui.test.core.component.HtmlInputComponent;
+import com.github.ui.test.core.component.HtmlSelectComponent;
+import com.github.ui.test.core.component.UiTestComponent;
+import com.github.ui.test.core.component.UiTestComponentList;
 
 /**
  * A factory for construction component asserts of
@@ -31,5 +38,4 @@ public interface UiTestAssertFactory {
     HtmlInputComponentAssert htmlInputComponentAssert(HtmlInputComponent actual);
 
     HtmlSelectComponentAssert htmlSelectComponentAssert(HtmlSelectComponent actual);
-
 }

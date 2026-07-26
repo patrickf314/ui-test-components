@@ -4,7 +4,11 @@ import com.github.ui.test.core.context.UiTestContext;
 
 public interface UiTestBrowser {
 
-    UiTestContext createNewTestContext(String baseUrl, String outputDirectory, String testName);
+    default UiTestContext createNewTestContext(String outputDirectory, String testName) {
+        return createNewTestContext(outputDirectory, testName, null);
+    }
+
+    UiTestContext createNewTestContext(String outputDirectory, String testName, Object properties);
 
     void stop();
 }

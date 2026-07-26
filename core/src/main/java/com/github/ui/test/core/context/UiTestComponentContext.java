@@ -2,7 +2,10 @@ package com.github.ui.test.core.context;
 
 import com.github.ui.test.core.action.UiTestCursorAction;
 import com.github.ui.test.core.action.UiTestScrollAction;
+import com.github.ui.test.core.component.UiTestPage;
 import com.github.ui.test.core.selector.Selector;
+
+import java.util.function.Function;
 
 public interface UiTestComponentContext extends UiTestElementContext {
 

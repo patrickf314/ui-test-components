@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class PlaywrightBrowser implements UiTestBrowser {
     private final Browser browser;
 
     @Override
-    public UiTestContext createNewTestContext(String baseUrl, String outputDirectory, String testName) {
+    public UiTestContext createNewTestContext(String outputDirectory, String testName, Object properties) {
         var browserContext = browser.newContext();
 
         if (!PlaywrightUiTestEnvironment.getEnvironment().getOptions().isTracesDisabled()) {
@@ -32,7 +33,7 @@ public class PlaywrightBrowser implements UiTestBrowser {
         }
 
         log.info("Created test context for {}", testName);
-        return new PlaywrightContext(defaultTimeout, baseUrl, outputDirectory, testName, browserContext);
+        return new PlaywrightContext(defaultTimeout, outputDirectory, testName, browserContext, properties);
     }
 
     @Override

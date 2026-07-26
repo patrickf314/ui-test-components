@@ -14,6 +14,7 @@ import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.Duration;
+import java.util.Collections;
 import java.util.function.Function;
 
 public class PlaywrightTestUtils {
@@ -59,7 +60,7 @@ public class PlaywrightTestUtils {
         }
 
         public PlaywrightPageContext pageContext(String baseUrl) {
-            return new PlaywrightPageContext(baseUrl, page);
+            return new PlaywrightPageContext(baseUrl, page, Collections.emptyMap());
         }
 
         public PlaywrightComponentContext componentContext(String selector) {

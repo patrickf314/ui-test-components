@@ -43,7 +43,7 @@ class PlaywrightExampleUiTest {
 
     @BeforeEach
     void setupTest(TestInfo testInfo) {
-        context = browser.createNewTestContext("http://localhost:" + webserverContainer.getMappedPort(80), "target/ui-tests", testName(testInfo));
+        context = browser.createNewTestContext(baseUrl(), "target/ui-tests", testName(testInfo));
     }
 
     @AfterEach
@@ -55,7 +55,7 @@ class PlaywrightExampleUiTest {
     void test() {
         var value = UUID.randomUUID().toString();
 
-        var page = context.openNewPage(TestPage::new, "/test.html");
+        var page = context.openNewPage(TestPage::new, baseUrl(), "/test.html");
 
         page.getInputField().setValue(value);
         page.getSubmitButton().click();
@@ -72,5 +72,9 @@ class PlaywrightExampleUiTest {
         }
 
         return testClass.getName() + "." + testMethod.getName();
+    }
+
+    private String baseUrl() {
+        return "http://localhost:" + webserverContainer.getMappedPort(80);
     }
 }
