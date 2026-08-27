@@ -33,9 +33,10 @@ public class PlaywrightListComponentAssert<T extends UiTestComponent>
 
     @Override
     public PlaywrightListComponentAssert<T> hasSize(int size) {
+        isNotNull();
         try {
             locatorAssertions().hasCount(size);
-        }catch (AssertionError error) {
+        } catch (AssertionError error) {
             var actual = getActualLocator().count();
             throw withActualExpected(error, "size(" + actual + ")", "size(" + size + ")");
         }
@@ -68,7 +69,21 @@ public class PlaywrightListComponentAssert<T extends UiTestComponent>
     public PlaywrightListComponentAssert<T> containsExactly(List<UiTestComponentPredicate> itemPredicates) {
         hasSize(itemPredicates.size());
         for (var i = 0; i < itemPredicates.size(); i++) {
-            assertThat(actual.get(i)).satisfies(itemPredicates.get(i));
+            var predicate = requirePlaywrightPredicate(itemPredicates.get(i));
+            try {
+                assertThat(actual.get(i)).satisfies(itemPredicates.get(i));
+            } catch (AssertionError _) {
+                var actualDescription = predicate.describeActual(getActualLocator().nth(i));
+                var expectedDescription = predicate.describeExpected();
+                throw failureWithActualExpected(
+                        actualDescription,
+                        expectedDescription,
+                        getActualContext().contextSpecificErrorMessage(
+                                "Assertion error",
+                                "Expected the element at index " + i + " to match " + expectedDescription + " but was " + actualDescription
+                        )
+                );
+            }
         }
         return this;
     }
@@ -77,7 +92,22 @@ public class PlaywrightListComponentAssert<T extends UiTestComponent>
     public PlaywrightListComponentAssert<T> containsExactlyInAnyOrder(List<UiTestComponentPredicate> itemPredicates) {
         hasSize(itemPredicates.size());
         for (var itemPredicate : itemPredicates) {
-            filteredListAssert(itemPredicate).hasSize(1);
+            var predicate = requirePlaywrightPredicate(itemPredicate);
+            try {
+                filteredListAssert(itemPredicate).hasSize(1);
+            } catch (AssertionError _) {
+                var matchCount = filteredListAssert(itemPredicate).getActualLocator().count();
+                var actualDescription = predicate.describeActual(getActualLocator());
+                var expectedDescription = predicate.describeExpected();
+                throw failureWithActualExpected(
+                        actualDescription,
+                        expectedDescription,
+                        getActualContext().contextSpecificErrorMessage(
+                                "Assertion error",
+                                "Expected exactly one element matching " + expectedDescription+ " but found " + matchCount + " in the list " + actualDescription
+                        )
+                );
+            }
         }
         return this;
     }

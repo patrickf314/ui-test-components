@@ -7,6 +7,7 @@ import com.github.ui.test.core.data.UiTestCookie;
 import com.github.ui.test.playwright.PlaywrightUiTestEnvironment;
 import com.github.ui.test.playwright.mapper.PlaywrightCookieMapper;
 import com.microsoft.playwright.BrowserContext;
+import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Tracing;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

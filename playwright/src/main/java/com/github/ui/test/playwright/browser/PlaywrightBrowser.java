@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
-import java.util.Map;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -21,7 +21,11 @@ public class PlaywrightBrowser implements UiTestBrowser {
 
     @Override
     public UiTestContext createNewTestContext(String outputDirectory, String testName, Object properties) {
-        var browserContext = browser.newContext();
+        var browserContext = browser.newContext(new Browser.NewContextOptions()
+                .setPermissions(List.of(
+                        "clipboard-read", "clipboard-write"
+                ))
+        );
 
         if (!PlaywrightUiTestEnvironment.getEnvironment().getOptions().isTracesDisabled()) {
             browserContext.tracing().start(

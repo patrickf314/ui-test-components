@@ -28,6 +28,8 @@ public interface UiTestComponentFactory {
 
     HtmlImageComponent imageComponent(UiTestComponentContext context);
 
+    CopyToClipboardComponent copyToClipboardComponent(UiTestComponentContext context);
+
     default <T extends UiTestComponent> HtmlTableComponent<T> tableComponent(UiTestComponentContext context, Function<UiTestComponentContext, T> entryConstructor) {
         return new HtmlTableComponent<>(context, entryConstructor);
     }

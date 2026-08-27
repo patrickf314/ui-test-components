@@ -3,6 +3,9 @@ package com.github.ui.test.core.assertion;
 import com.github.ui.test.core.component.UiTestComponent;
 import com.github.ui.test.core.predicate.UiTestComponentPredicate;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 /**
  * The generic base interface of a {@link UiTestComponent} assert
  *
@@ -65,6 +68,36 @@ public interface GenericUiTestComponentAssert<SELF extends GenericUiTestComponen
      * @return this
      */
     SELF satisfies(UiTestComponentPredicate predicate);
+
+    /**
+     * Asserts that the component matches all the given predicates
+     *
+     * @param predicates the {@link UiTestComponentPredicate}s
+     * @return this
+     */
+    default SELF satisfiesAll(UiTestComponentPredicate... predicates) {
+        return satisfiesAll(Arrays.asList(predicates));
+    }
+
+    /**
+     * Asserts that the component matches all the given predicates
+     *
+     * @param predicates the {@link UiTestComponentPredicate}s
+     * @return this
+     */
+    default SELF satisfiesAll(Collection<UiTestComponentPredicate> predicates) {
+        if (predicates.isEmpty()) {
+            throw new IllegalArgumentException("At least one predicate is required");
+        }
+
+        var iterator = predicates.iterator();
+        SELF self;
+        do {
+            self = satisfies(iterator.next());
+        } while (iterator.hasNext());
+
+        return self;
+    }
 
     /**
      * Asserts that the component does not match the given predicate

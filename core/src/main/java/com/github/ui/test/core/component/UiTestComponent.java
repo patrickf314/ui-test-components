@@ -144,6 +144,15 @@ public class UiTestComponent extends UiTestElement<UiTestComponentContext> {
     }
 
     /**
+     * Constructing function of an {@link CopyToClipboardComponent}
+     *
+     * @return the component constructor
+     */
+    public static Function<UiTestComponentContext, CopyToClipboardComponent> copyToClipboardComponent() {
+        return getEnvironment().getComponentFactory()::copyToClipboardComponent;
+    }
+
+    /**
      * Clicks this component
      */
     public void click() {

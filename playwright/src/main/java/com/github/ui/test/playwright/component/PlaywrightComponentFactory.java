@@ -49,6 +49,11 @@ public class PlaywrightComponentFactory implements UiTestComponentFactory {
         return new PlaywrightImageComponent(context);
     }
 
+    @Override
+    public CopyToClipboardComponent copyToClipboardComponent(UiTestComponentContext context) {
+        return new PlaywrightCopyToClipboardComponent(context);
+    }
+
     public static PlaywrightComponentContext requirePlaywrightContext(UiTestComponentContext context) {
         if (context instanceof PlaywrightComponentContext playwrightContext) {
             return playwrightContext;
